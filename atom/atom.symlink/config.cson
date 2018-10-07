@@ -1,0 +1,11 @@
+"*":
+  core:
+    telemetryConsent: "no"
+  editor:
+    invisibles: {}
+  "linter-ui-default":
+    panelHeight: 69
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false

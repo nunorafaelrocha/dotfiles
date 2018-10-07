@@ -1,0 +1,75 @@
+# OS or Editor files
+._*
+.DS_Store
+.vscode/*
+Thumbs.db
+
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+
+# npm
+.npmignore
+
+
+# svn
+.svn
+
+# Always-ignore extensions
+*~
+*.diff
+*.err
+*.orig
+*.pyc
+*.rej
+*.sass-cache
+*.sw?
+*.vi
+
+
+# compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+
+
+# packages
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.bzip
+*.xz
+*.lzma
+
+
+# packing-only formats
+*.iso
+*.tar
+
+
+# package management formats
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+
+
+# logs and databases
+*.log
+*.sqlite
+
+
+# common project directories
+build/*
+cache/*
+log/*

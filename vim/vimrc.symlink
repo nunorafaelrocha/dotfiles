@@ -1,0 +1,119 @@
+" Bundles
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+  syntax on
+  colorscheme molokai
+endif
+
+" Leader
+let mapleader = " "
+
+" Environment
+set noswapfile
+set enc=utf8
+set bs=2
+set ff=unix
+set ffs=unix
+set nocompatible
+set hidden
+set nobackup
+set dir=/tmp,/var/tmp
+set autoread
+set nu
+set vb
+set ch=1
+set nosmd
+set mousehide
+set ttyfast
+set autoindent
+set copyindent
+set smartindent
+set nolist
+set nofoldenable
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/*cache,*/logs,*/web/bundles,.DS_Store
+
+" Search
+set incsearch
+set hlsearch
+set showmatch
+set ignorecase
+set smartcase
+set gdefault
+set tags+=vendor.tags
+
+" Text Formatting
+set nowrap                 " do not wrap lines
+set softtabstop=2          " yep, two
+set shiftwidth=2           " ..
+set shiftround
+set tabstop=4
+set expandtab              " expand tabs to spaces
+set nosmarttab             " fuck tabs
+set formatoptions+=n       " support for numbered/bullet lists
+set virtualedit=block      " allow virtual edit in visual block ..
+
+" UI
+set ruler                  " show the cursor position all the time
+set noshowcmd              " don't display incomplete commands
+set number                 " line numbers
+set wildmenu               " turn on wild menu
+set wildmode=list:longest,full
+set ch=2                   " command line height
+set backspace=2            " allow backspacing over everything in insert mode
+set whichwrap+=<,>,h,l,[,] " backspace and cursor keys wrap to
+set shortmess=filtIoOA     " shorten messages
+set report=0               " tell us about changes
+set nostartofline          " don't jump to the start of line when scrolling
+
+
+" Visual Cues
+set showmatch              " brackets/braces that is
+set mat=5                  " duration to show matching brace (1/10 sec)
+set incsearch              " do incremental searching
+set laststatus=2           " always show the status line
+set ignorecase             " ignore case when searching
+set nohlsearch             " don't highlight searches
+set visualbell             " shut the fuck up
+
+
+" Strip all trailing whitespace in file (,ss)
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+
+noremap <leader>ss :call StripWhitespace()<CR>
+
+" Save a file as root (,W)
+noremap <leader>W :w !sudo tee % > /dev/null<CR>
+
+" git
+setlocal formatoptions+=tcq
+
+augroup vimrcEx
+  autocmd!
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+  " Automatically wrap at 72 characters for git commit messages
+  autocmd FileType gitcommit setlocal textwidth=72
+augroup END
+
+" Local config
+if filereadable($HOME . "/.vimrc.local")
+  source ~/.vimrc.local
+endif

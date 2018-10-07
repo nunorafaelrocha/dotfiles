@@ -1,0 +1,12 @@
+atom/atom.symlink/.apm
+atom/atom.symlink/.node-gyp
+atom/atom.symlink/.storage
+atom/atom.symlink/blob-store
+atom/atom.symlink/blob-store
+atom/atom.symlink/compile-cache/
+atom/atom.symlink/packages
+atom/atom.symlink/recovery
+atom/atom.symlink/storage
+atom/atom.symlink/themes
+
+git/gitconfig.local.symlink
