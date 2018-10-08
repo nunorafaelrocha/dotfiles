@@ -24,6 +24,7 @@ brew 'youtube-dl'
 
 cask '1password'
 cask 'atom'
+cask 'docker'
 cask 'firefox'
 cask 'google-backup-and-sync'
 cask 'google-chrome-beta'
