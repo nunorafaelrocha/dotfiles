@@ -24,6 +24,7 @@ brew 'yarn'
 brew 'youtube-dl'
 
 cask '1password'
+cask 'aerial'
 cask 'atom'
 cask 'docker'
 cask 'firefox'
