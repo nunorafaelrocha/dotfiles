@@ -43,6 +43,9 @@ defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 # Set menu-bar icons.
 defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Clock.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Eject.menu" "/System/Library/CoreServices/Menu Extras/Volume.menu" "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/TextInput.menu" "/System/Library/CoreServices/Menu Extras/Displays.menu"
 
+# Show date, day of the week and format clock in menu bar.
+defaults write com.apple.menuextra.clock "DateFormat" "EEE d MMM  HH:mm"
+
 # Display battery percentage.
 defaults write com.apple.menuextra.battery ShowPercent YES
 
