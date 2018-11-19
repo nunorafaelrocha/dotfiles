@@ -1,0 +1,1 @@
+./bin/atom-package-install
