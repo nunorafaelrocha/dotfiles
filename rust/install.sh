@@ -1,0 +1,1 @@
+rustup-init -y
