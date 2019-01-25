@@ -19,9 +19,13 @@ do
   source $file
 done
 
+# Load Nerd Fonts with Powerlevel9k theme for Zsh
+POWERLEVEL9K_MODE='nerdfont-complete'
+
 # load prezto
 source "${ZSH}/zprezto/init.zsh"
 
+# remove Zsh conflits
 unalias gr gra grc gri grs gpt
 
 # load everything but the path and completion files
