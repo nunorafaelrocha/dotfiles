@@ -2,6 +2,7 @@ atom-shell-commands@1.5.0
 busy-signal@1.4.3
 clipboard-history@0.6.6
 editorconfig@2.2.2
+file-icons@2.1.29
 intentions@1.1.5
 language-api-blueprint@1.0.2
 language-babel@2.85.0

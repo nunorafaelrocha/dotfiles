@@ -5,7 +5,6 @@
     invisibles: {}
   "linter-ui-default":
     panelHeight: 69
-  "tree-view":
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   welcome:
     showOnStartup: false
