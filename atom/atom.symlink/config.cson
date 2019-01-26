@@ -1,5 +1,9 @@
 "*":
   core:
+    disabledPackages: [
+      "metrics"
+      "exception-reporting"
+    ]
     telemetryConsent: "no"
   editor:
     invisibles: {}
