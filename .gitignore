@@ -10,3 +10,5 @@ atom/atom.symlink/storage
 atom/atom.symlink/themes
 
 git/gitconfig.local.symlink
+
+vim/vim.symlink/bundle/*

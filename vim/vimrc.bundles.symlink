@@ -2,12 +2,15 @@ if &compatible
   set nocompatible
 end
 
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Let Vundle manage Vundle
-Plugin 'gmarik/Vundle.vim'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
 " Define bundles via Github repos
 Plugin 'tpope/vim-git'
@@ -16,5 +19,17 @@ if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
 endif
 
-call vundle#end()
-filetype on
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists con figured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
