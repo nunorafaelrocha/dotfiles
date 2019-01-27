@@ -542,10 +542,6 @@ defaults write com.apple.Terminal ShowLineMarks -int 0
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
-# Install the custom themes for iTerm
-open "iterm2/nuno.itermcolors"
-open "iterm2/nuno-blue.itermcolors"
-
 # Load settings from dotfiles dir.
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.dotfiles/iterm2/"
 
