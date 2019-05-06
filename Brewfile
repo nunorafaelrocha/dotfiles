@@ -51,6 +51,7 @@ cask 'suspicious-package' # https://www.mothersruin.com/software/SuspiciousPacka
 cask 'transmission'
 cask 'tunnelbear'
 cask 'tunnelblick'
+cask 'visual-studio-code'
 cask 'vlc'
 cask 'webpquicklook' # https://github.com/dchest/webp-quicklook
 cask 'zoomus'
