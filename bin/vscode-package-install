@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Usage: vscode-package-install
+#
+# Installs the vscode extensions listed in your packages.txt file
+# located at ~/.dotfiles/vscode/packages.txt
+#
+# You can generate a new list based on currently installed
+# packages via vscode-package-backup
+
+set -e
+
+while read in; do code --install-extension "$in"; done < ~/.dotfiles/vscode/packages.txt
