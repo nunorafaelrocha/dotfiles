@@ -4,9 +4,9 @@ export CLICOLOR=true
 # Disable automatic git pull.
 export PURE_GIT_PULL=0
 
-fpath=($ZSH/functions $fpath)
+fpath=($DOTFILES/functions $fpath)
 
-autoload -U $ZSH/functions/*(:t)
+autoload -U $DOTFILES/functions/*(:t)
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000

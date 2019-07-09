@@ -1,4 +1,4 @@
 
 # Install the custom themes for iTerm.
-open $ZSH"iterm2/nuno.itermcolors"
-open $ZSH/"iterm2/nuno-blue.itermcolors"
+open $DOTFILES"iterm2/nuno.itermcolors"
+open $DOTFILES/"iterm2/nuno-blue.itermcolors"
