@@ -28,7 +28,7 @@ fail () {
 }
 
 setup_projects_dir () {
-  mkdir -p $PROJECTS
+  mkdir -p ~/Projects
 }
 
 setup_gitconfig () {
