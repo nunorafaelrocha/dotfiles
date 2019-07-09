@@ -120,13 +120,13 @@ typeset -U config_files
 config_files=($DOTFILES/**/*.zsh)
 
 # load the path files
-for file in ${${(M)config_files_new:#*/path.zsh}:#*/(zprezto|oh-my-zsh)/*.zsh}
+for file in ${${(M)config_files:#*/path.zsh}:#*/oh-my-zsh/*.zsh}
 do
   source $file
 done
 
 # load everything but the path and completion files
-for file in ${${config_files:#*/(path|completion).zsh}:#*/(zprezto|oh-my-zsh)/*.zsh}
+for file in ${${config_files:#*/(path|completion).zsh}:#*/oh-my-zsh/*.zsh}
 do
   source $file
 done
@@ -136,7 +136,7 @@ autoload -U compinit
 compinit
 
 # load every completion after autocomplete loads
-for file in ${${(M)config_files:#*/completion.zsh}:#*/(zprezto|oh-my-zsh)/*.zsh}
+for file in ${${(M)config_files:#*/completion.zsh}:#*/oh-my-zsh/*.zsh}
 do
   source $file
 done
