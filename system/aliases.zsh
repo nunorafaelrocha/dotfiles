@@ -26,4 +26,7 @@ then
 
   # Check your current local IP address
   alias iplocal="ipconfig getifaddr en0"
+
+  # Quickly lock your screen by starting screensaver on macOS
+  alias afk="/System/Library/CoreServices/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine"
 fi
