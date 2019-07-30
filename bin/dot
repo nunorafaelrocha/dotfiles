@@ -7,49 +7,244 @@
 
 set -e
 
-parentDirectory="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P)"
-dotfilesDirectory="$(cd "$( dirname "$parentDirectory" )" && pwd -P)"
+cd "$(dirname "$0")/.."
 
-displayUsageAndExit() {
+export DOTFILES=$HOME/.dotfiles
+
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+help() {
 	echo "dot -- dotfiles management"
 	echo ""
 	echo "Usage: dot [options]"
 	echo ""
 	echo "Options:"
-	echo "  -e, --edit    Open dotfiles directory for editing"
-	echo "  -h, --help    Show this help message and exit"
+	echo "  -e, --edit                 Open dotfiles directory for editing"
+	echo "  -h, --help                 Show this help message and exit"
+	echo "  -i, --install              Install software"
+	echo "  --set-defaults             Set OS defaults"
+	echo "  --link                     Link .symlink files"
+  echo "  --setup-projects-folder    Setup projects folder"
+  echo "  --setup-git                Setup gitconfig"
 	exit
+}
+
+setup_projects_dir () {
+  mkdir -p ~/Projects
+
+  success 'projects folder created'
+}
+
+setup_gitconfig () {
+  info 'setup gitconfig'
+
+  if ! [ -f git/gitconfig.local.symlink ]
+  then
+    git_credential='cache'
+    if [ "$(uname -s)" == "Darwin" ]
+    then
+      git_credential='osxkeychain'
+    fi
+
+    user ' - What is your github author name?'
+    read -e git_authorname
+    user ' - What is your github author email?'
+    read -e git_authoremail
+
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
+
+    success 'gitconfig configured'
+  else
+    success 'gitconfig.local already exists'
+  fi
+}
+
+set_os_defaults() {
+  if [ "$(uname -s)" == "Darwin" ]
+  then
+    info "installing macos defaults"
+
+    $DOTFILES/macos/set-defaults.sh
+  else
+    info "No OS defaults avaiable for your OS"
+  fi
+
+  success "OS defaults applied successfully"
+}
+
+install_software() {
+  info "installing software"
+  info "installing homebrew"
+
+  $DOTFILES/homebrew/install.sh 2>&1
+
+  success "homebrew installed successfully"
+
+  # # Upgrade homebrew
+  info "running brew update"
+  brew update
+  success "brew update completed"
+
+  # # Run Homebrew through the Brewfile
+  info "running brew bundle"
+  brew bundle
+  success "brew bundle completed"
+
+  # find the installers and run them iteratively
+  info "running custom installers"
+  find . -name install.sh | while read installer ; do sh -c "${installer}" ; success ${installer} ; done
+
+  success "software installed successfully"
+}
+
+link_file () {
+  local src=$1 dst=$2
+
+  local overwrite= backup= skip=
+  local action=
+
+  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
+  then
+
+    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+    then
+
+      local currentSrc="$(readlink $dst)"
+
+      if [ "$currentSrc" == "$src" ]
+      then
+
+        skip=true;
+
+      else
+
+        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+        read -n 1 action
+
+        case "$action" in
+          o )
+            overwrite=true;;
+          O )
+            overwrite_all=true;;
+          b )
+            backup=true;;
+          B )
+            backup_all=true;;
+          s )
+            skip=true;;
+          S )
+            skip_all=true;;
+          * )
+            ;;
+        esac
+
+      fi
+
+    fi
+
+    overwrite=${overwrite:-$overwrite_all}
+    backup=${backup:-$backup_all}
+    skip=${skip:-$skip_all}
+
+    if [ "$overwrite" == "true" ]
+    then
+      rm -rf "$dst"
+      success "removed $dst"
+    fi
+
+    if [ "$backup" == "true" ]
+    then
+      mv "$dst" "${dst}.backup"
+      success "moved $dst to ${dst}.backup"
+    fi
+
+    if [ "$skip" == "true" ]
+    then
+      success "skipped $src"
+    fi
+  fi
+
+  if [ "$skip" != "true" ]  # "false" or empty
+  then
+    ln -s "$1" "$2"
+    success "linked $1 to $2"
+  fi
+}
+
+install_link_files() {
+	info 'installing .symlink files'
+
+	local overwrite_all=false backup_all=false skip_all=false
+
+	for src in $(find -H "$DOTFILES" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
+	do
+		dst="$HOME/.$(basename "${src%.*}")"
+		link_file "$src" "$dst"
+	done
+
+  success '.symlink files installed'
 }
 
 while test $# -gt 0; do
 	case "$1" in
-		"-h"|"--help")
-			displayUsageAndExit
-			;;
-		"-e"|"--edit")
-			exec "$EDITOR" "$dotfilesDirectory"
-			exit
-			;;
-		*)
-			echo "Invalid option: $1"
-			displayUsageAndExit
-			;;
+    "-h"|"--help")
+      help
+      ;;
+    "-e"|"--edit")
+      exec "$EDITOR" "$DOTFILES"
+      exit
+      ;;
+    "-i"|"--install")
+      install_software
+      exit
+      ;;
+    "--set-defaults")
+      set_os_defaults
+      exit
+      ;;
+    "--link")
+      install_link_files
+      exit
+      ;;
+    "--setup-projects-dir")
+      setup_projects_dir
+      exit
+      ;;
+    "--setup-git")
+      setup_gitconfig
+      exit
+      ;;
+    *)
+      echo "Invalid option: $1"
+      displayUsageAndExit
+      ;;
 	esac
 	shift
 done
 
-export DOTFILES=$HOME/.dotfiles
+# Full install
+setup_projects_dir
+setup_gitconfig
+install_link_files
+install_software
+set_os_defaults
 
-# Set macOS defaults
-$DOTFILES/macos/set-defaults.sh
-
-# Install homebrew
-$DOTFILES/homebrew/install.sh 2>&1
-
-# Upgrade homebrew
-echo "› brew update"
-brew update
-
-# Install software
-echo "› $DOTFILES/script/install"
-$DOTFILES/script/install
+echo ''
+echo '  All installed!'
