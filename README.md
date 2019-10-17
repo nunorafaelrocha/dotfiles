@@ -1,8 +1,9 @@
 <div align="center">
-	<img src="logo.jpg" alt="Dotfiles">
   <br>
-	<br>
-	<p>
+  <img src="logo.jpg" alt="Dotfiles">
+  <br>
+  <br>
+  <p>
     Your dotfiles are how you personalize your system. These are mine. :sunglasses:
   </p>
   <br>
