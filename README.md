@@ -1,6 +1,14 @@
-# dotfiles
+<div align="center">
+	<img width="500" height="auto" src="logo.jpg" alt="Dotfiles">
+  <br>
+	<br>
+	<p>
+    Your dotfiles are how you personalize your system. These are mine. :sunglasses:
+  </p>
+  <br>
+	<br>
+</div>
 
-Your dotfiles are how you personalize your system. These are mine.
 
 ## install
 
