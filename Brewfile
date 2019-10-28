@@ -26,6 +26,7 @@ brew 'vim'
 brew 'wget'
 brew 'yarn'
 brew 'youtube-dl'
+brew 'pyenv'
 
 cask '1password'
 cask 'aerial'
