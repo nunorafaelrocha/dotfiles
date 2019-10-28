@@ -38,6 +38,7 @@ cask 'google-backup-and-sync'
 cask 'google-chrome-beta'
 cask 'hyper'
 cask 'iterm2'
+cask 'notion'
 cask 'postico'
 cask 'postman'
 cask 'qlcolorcode' # https://github.com/anthonygelibert/QLColorCode
