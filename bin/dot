@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # dot
 #
@@ -58,15 +58,13 @@ setup_gitconfig () {
   if ! [ -f git/gitconfig.local.symlink ]
   then
     git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
+    if [ `uname` == "Darwin" ]
     then
       git_credential='osxkeychain'
     fi
 
-    user ' - What is your github author name?'
-    read -e git_authorname
-    user ' - What is your github author email?'
-    read -e git_authoremail
+    read -p "- What is your github author name? " git_authorname
+    read -p "- What is your github author email? " git_authoremail
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
 
@@ -77,7 +75,7 @@ setup_gitconfig () {
 }
 
 set_os_defaults() {
-  if [ "$(uname -s)" == "Darwin" ]
+  if [ `uname` == "Darwin" ]
   then
     info "installing macos defaults"
 
