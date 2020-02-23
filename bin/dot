@@ -31,6 +31,7 @@ fail () {
 }
 
 help() {
+  banner
 	echo "dot -- dotfiles management"
 	echo ""
 	echo "Usage: dot [options]"
@@ -104,29 +105,39 @@ set_os_defaults() {
     info "No OS defaults avaiable for your OS"
   fi
 
-  success "OS defaults applied successfully"
+  success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
 }
 
 install_software() {
-  info "installing software"
-  info "installing homebrew"
+  if test ! $(which brew)
+  then
+    info "installing homebrew..."
 
-  $DOTFILES/homebrew/install.sh 2>&1
+    # Install the correct homebrew for each OS type
+    if [ `uname` == "Darwin" ]
+    then
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
+    then
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
-  success "homebrew installed successfully"
+      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+      test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+      echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+    fi
+  fi
 
-  # # Upgrade homebrew
-  info "running brew update"
+  info "updating Homebrew..."
   brew update
-  success "brew update completed"
+  brew upgrade
+  brew cleanup
 
-  # # Run Homebrew through the Brewfile
-  info "running brew bundle"
+  info "installing software..."
   brew bundle
-  success "brew bundle completed"
 
   # find the installers and run them iteratively
-  info "running custom installers"
+  info "running custom installers..."
   find . -name install.sh | while read installer ; do sh -c "${installer}" ; success ${installer} ; done
 
   success "software installed successfully"
