@@ -10,15 +10,18 @@
 	<br>
 </div>
 
+## installation
 
-## install
-
-Run this:
+via curl
 
 ```sh
-git clone https://github.com/nunorafaelrocha/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-bin/dot
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/master/bin/dot)"
+```
+
+via wget
+
+```sh
+bash -c "$(wget https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/master/bin/dot -O -)"
 ```
 
 This will symlink the appropriate files in `.dotfiles` to your home directory.

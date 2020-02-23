@@ -10,6 +10,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 export DOTFILES=$HOME/.dotfiles
+GITHUB_REPOSITORY_URL="https://github.com/nunorafaelrocha/dotfiles"
 
 info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
@@ -202,6 +203,26 @@ install_link_files() {
   success '.symlink files installed'
 }
 
+install_dotfiles() {
+  info "Trying to detect installed dotfiles in $DOTFILES..."
+
+  if [ ! -d $DOTFILES ]; then
+    read -p "Do you agree to proceed with nuno's dotfiles installation? [Y/n] " -n 1 y
+    echo ""
+    answer=`echo "${y}" | tr '[a-z]' '[A-Z]'`
+    if [ ${answer} != "Y" ]
+    then
+      info "Ok... maybe next time then."
+      exit 1
+    fi
+
+    info "Here we go! 🚀"
+    git clone --recursive "$GITHUB_REPOSITORY_URL.git" $DOTFILES
+  else
+    info "You already have dotfiles installed. Skipping..."
+  fi
+}
+
 while test $# -gt 0; do
 	case "$1" in
     "-h"|"--help")
@@ -240,11 +261,19 @@ while test $# -gt 0; do
 done
 
 # Full install
-setup_projects_dir
-setup_gitconfig
-install_link_files
-install_software
-set_os_defaults
+main() {
+  install_dotfiles "$*"
+  setup_projects_dir
+  setup_gitconfig
+  install_link_files
+  install_software
+  set_os_defaults
 
-echo ''
-echo '  All installed!'
+  echo ""
+  echo ""
+  echo "Installation completed!!! Have fun! 🔥"
+  echo ""
+  exit
+}
+
+main "$*"
