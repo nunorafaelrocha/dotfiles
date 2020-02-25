@@ -27,24 +27,29 @@ success () {
 fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
-  exit
+  exit 1
+}
+
+command_exists() {
+  command -v $1 > /dev/null 2>&1
 }
 
 help() {
   banner
-	echo "dot -- dotfiles management"
-	echo ""
-	echo "Usage: dot [options]"
-	echo ""
-	echo "Options:"
-	echo "  -e, --edit                 Open dotfiles directory for editing"
-	echo "  -h, --help                 Show this help message and exit"
-	echo "  -i, --install              Install software"
-	echo "  --set-defaults             Set OS defaults"
-	echo "  --link                     Link .symlink files"
+  echo "dot -- dotfiles management"
+  echo ""
+  echo "Usage: dot [options]"
+  echo ""
+  echo "Options:"
+  echo "  -i, --install              Install dotfiles"
+  echo "  -e, --edit                 Open dotfiles directory for editing"
+  echo "  -h, --help                 Show this help message and exit"
+  echo "  -s, --install-software     Install software"
+  echo "  --set-defaults             Set OS defaults"
+  echo "  --link                     Link .symlink files"
   echo "  --setup-projects-folder    Setup projects folder"
   echo "  --setup-git                Setup gitconfig"
-	exit
+  exit
 }
 
 banner() {
@@ -70,35 +75,32 @@ banner() {
 setup_projects_dir () {
   mkdir -p ~/Projects
 
-  success 'projects folder created'
+  success 'Projects folder created'
 }
 
 setup_gitconfig () {
-  info 'setup gitconfig'
+  info 'Setting up gitconfig...'
 
-  if ! [ -f git/gitconfig.local.symlink ]
-  then
+  if ! [ -f $DOTFILES/git/gitconfig.local.symlink ]; then
     git_credential='cache'
-    if [ `uname` == "Darwin" ]
-    then
+    if [ `uname` == "Darwin" ]; then
       git_credential='osxkeychain'
     fi
 
     read -p "- What is your github author name? " git_authorname
     read -p "- What is your github author email? " git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" $DOTFILES/git/gitconfig.local.symlink.example > $DOTFILES/git/gitconfig.local.symlink
 
-    success 'gitconfig configured'
+    success 'Finished setting up gitconfig.'
   else
-    success 'gitconfig.local already exists'
+    success 'The gitconfig.local already exists. Skipping...'
   fi
 }
 
 set_os_defaults() {
-  if [ `uname` == "Darwin" ]
-  then
-    info "installing macos defaults"
+  if [ `uname` == "Darwin" ]; then
+    info "Installing macos defaults..."
 
     $DOTFILES/macos/set-defaults.sh
   else
@@ -108,17 +110,14 @@ set_os_defaults() {
   success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
 }
 
-install_software() {
-  if test ! $(which brew)
-  then
-    info "installing homebrew..."
+install_homebrew() {
+  if test ! $(which brew); then
+    info "Installing homebrew..."
 
     # Install the correct homebrew for each OS type
-    if [ `uname` == "Darwin" ]
-    then
+    if [ `uname` == "Darwin" ]; then
       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
-    then
+    elif test "$(expr substr $(uname -s) 1 5)" = "Linux"; then
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
       test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
@@ -126,21 +125,30 @@ install_software() {
       test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
       echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
     fi
+  else
+    success "Brew already installed. Skipping..."
   fi
+}
 
-  info "updating Homebrew..."
+install_software() {
+  info "Updating Homebrew..."
   brew update
   brew upgrade
   brew cleanup
 
-  info "installing software..."
-  brew bundle
+  info "Installing software..."
+
+  if [ `uname` == 'Linux' ]; then
+    brew bundle --file $DOTFILES/Brewfile.linux
+  else
+    brew bundle --file $DOTFILES/Brewfile
+  fi
 
   # find the installers and run them iteratively
-  info "running custom installers..."
-  find . -name install.sh | while read installer ; do sh -c "${installer}" ; success ${installer} ; done
+  info "Running custom installers..."
+  find . -name install.sh -not -path "./oh-my-zsh/*" | while read installer ; do bash -c "${installer}" ; success ${installer} ; done
 
-  success "software installed successfully"
+  success "Software installed successfully."
 }
 
 link_file () {
@@ -219,41 +227,110 @@ link_file () {
 }
 
 install_link_files() {
-	info 'installing .symlink files'
+	info 'Installing .symlink files...'
 
 	local overwrite_all=false backup_all=false skip_all=false
 
-	for src in $(find -H "$DOTFILES" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
+	for src in $(find -H "$DOTFILES" -maxdepth 2 -name '*.symlink' -not -path '*.git*' -not -path "./oh-my-zsh/*" )
 	do
 		dst="$HOME/.$(basename "${src%.*}")"
 		link_file "$src" "$dst"
 	done
 
-  success '.symlink files installed'
+  success 'All .symlink files installed.'
+}
+
+install_cli_tools() {
+  if [ `uname` == 'Linux' ]; then
+    sudo apt-get update && sudo apt-get install build-essential -y
+  elif [ `uname` == 'Darwin' ]; then
+
+    if ! [ $(xcode-select -p) ]; then
+      info "Installing Command Line Tools..."
+      info "Please, wait until Command Line Tools will be installed, before continue."
+
+      xcode-select --install
+
+      success "Command Line Tools installed successfully."
+    else
+      success "Command Line Tools already installed. Skipping..."
+    fi
+  fi
+}
+
+install_git() {
+  if ! command_exists git; then
+    info "Installing Git..."
+
+    if [ `uname` == 'Darwin' ]; then
+      brew install git
+    elif [ `uname` == 'Linux' ]; then
+      sudo apt-get install git
+    else
+      fail "Error: Failed to install Git!"
+    fi
+
+    success "Git installed successfully."
+  else
+    success "Git already installed. Skipping..."
+  fi
 }
 
 install_dotfiles() {
-  info "Trying to detect installed dotfiles in $DOTFILES..."
+  echo "Checking for installed dotfiles in $DOTFILES..."
+  echo ""
 
-  if [ ! -d $DOTFILES ]; then
-    read -p "Do you agree to proceed with nuno's dotfiles installation? [Y/n] " -n 1 y
-    echo ""
-    answer=`echo "${y}" | tr '[a-z]' '[A-Z]'`
-    if [ ${answer} != "Y" ]
-    then
-      info "Ok... maybe next time then."
-      exit 1
-    fi
-
-    info "Here we go! 🚀"
-    git clone --recursive "$GITHUB_REPOSITORY_URL.git" $DOTFILES
+  if [ ! -d $DOTFILES ]
+  then
+    message="Do you want to install nuno's dotfiles? [Y/n] "
   else
-    info "You already have dotfiles installed. Skipping..."
+    message="You already have dotfiles installed, do you want to update? [Y/n] "
   fi
+
+  read -p "${message}" -n 1 y
+  echo ""
+  answer=`echo "${y}" | tr '[a-z]' '[A-Z]'`
+
+  if [ ${answer} != "Y" ]
+  then
+    fail "Ok... maybe next time then."
+  fi
+
+  success "Here we go! 🚀"
+
+  install_cli_tools
+  install_git
+  install_homebrew
+
+  if [ ! -d $DOTFILES ]
+  then
+    git clone --recursive "$GITHUB_REPOSITORY_URL.git" $DOTFILES
+  fi
+}
+
+# Full install
+main() {
+  banner "$*"
+  install_dotfiles "$*"
+  setup_projects_dir
+  setup_gitconfig
+  install_link_files
+  install_software
+  set_os_defaults
+
+  echo ""
+  echo ""
+  echo "Installation completed!!! Have fun! 🔥"
+  echo ""
+  exit
 }
 
 while test $# -gt 0; do
 	case "$1" in
+    "-i"|"--install")
+      main
+      exit
+      ;;
     "-h"|"--help")
       help
       ;;
@@ -261,7 +338,7 @@ while test $# -gt 0; do
       exec "$EDITOR" "$DOTFILES"
       exit
       ;;
-    "-i"|"--install")
+    "-s"|"--install-software")
       install_software
       exit
       ;;
@@ -283,27 +360,11 @@ while test $# -gt 0; do
       ;;
     *)
       echo "Invalid option: $1"
-      displayUsageAndExit
+      help
+      exit
       ;;
 	esac
 	shift
 done
-
-# Full install
-main() {
-  banner "$*"
-  install_dotfiles "$*"
-  setup_projects_dir
-  setup_gitconfig
-  install_link_files
-  install_software
-  set_os_defaults
-
-  echo ""
-  echo ""
-  echo "Installation completed!!! Have fun! 🔥"
-  echo ""
-  exit
-}
 
 main "$*"
