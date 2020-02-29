@@ -1,1 +1,1 @@
-./bin/atom-package-install
+$DOTFILES/bin/atom-package-install
