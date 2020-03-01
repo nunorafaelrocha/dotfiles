@@ -10,7 +10,7 @@
 	<br>
 </div>
 
-## installation
+## 🛠 installation
 
 via curl
 
@@ -62,7 +62,7 @@ There's a few special files in the hierarchy.
   but still keep those autoloaded files in your home directory. These get
   symlinked in when you run `dot` or `dot --link`.
 
-## thanks
+## 🙏 thanks
 
 I forked [Zach Holman](https://github.com/holman)'s awesome
 [dotfiles](https://github.com/holman/dotfiles) which were an easy way to start my own customization.
