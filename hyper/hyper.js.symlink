@@ -147,8 +147,7 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    "hyper-material-theme",
-    "hyperline"
+    "hyper-material-theme"
   ],
 
   // in development, you can create a directory under
