@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Usage: atom-package-update
+#
+# Updates the atom packages and
+# saves a list of your currently installed atom packages to
+# ~/.dotfiles/atom.symlink/packages.txt suitable for install
+# via atom-package-install
+
+set -e
+
+apm update --no-confirm
+
+apm install --packages-file ~/.dotfiles/atom/packages.txt
