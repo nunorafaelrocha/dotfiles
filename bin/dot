@@ -126,16 +126,19 @@ clone_or_update_repository() {
   fi
 }
 
+# enter on Y/N linux seems to skip question
+# don't run this as root!
+# [: !=: unary operator expected
+
 install_homebrew() {
   if test ! $(which brew); then
     info "Installing homebrew..."
 
-    # Install the correct homebrew for each OS type
-    if [ `uname` == "Darwin" ]; then
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    elif test "$(expr substr $(uname -s) 1 5)" = "Linux"; then
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
+    # Linux: add Homebrew to your PATH and to your bash shell profile script,
+    # either ~/.profile on Debian/Ubuntu or ~/.bash_profile on CentOS/Fedora/Red Hat.
+    if test "$(expr substr $(uname -s) 1 5)" = "Linux"; then
       test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
       test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
       test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
@@ -273,7 +276,7 @@ install_link_files() {
 
 install_cli_tools() {
   if [ `uname` == 'Linux' ]; then
-    sudo apt-get update && sudo apt-get install build-essential -y
+    sudo apt-get update && sudo apt-get install build-essential curl wget -y
   elif [ `uname` == 'Darwin' ]; then
 
     if ! [ $(xcode-select -p) ]; then
