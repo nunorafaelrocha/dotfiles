@@ -126,10 +126,6 @@ clone_or_update_repository() {
   fi
 }
 
-# enter on Y/N linux seems to skip question
-# don't run this as root!
-# [: !=: unary operator expected
-
 install_homebrew() {
   if test ! $(which brew); then
     info "Installing homebrew..."
@@ -325,7 +321,7 @@ install_dotfiles() {
   echo ""
   answer=`echo "${y}" | tr '[a-z]' '[A-Z]'`
 
-  if [ ${answer} != "Y" ]
+  if [[ ${answer} != "Y" ]]
   then
     fail "Ok... maybe next time then."
   fi
