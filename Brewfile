@@ -32,6 +32,7 @@ cask '1password'
 cask 'aerial'
 cask 'atom'
 cask 'betterzip' # https://macitbetter.com/downloads/
+cask 'cyberduck'
 cask 'docker'
 cask 'firefox'
 cask 'font-hack-nerd-font'

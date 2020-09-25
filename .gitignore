@@ -8,6 +8,7 @@ atom/atom.symlink/packages
 atom/atom.symlink/recovery
 atom/atom.symlink/storage
 atom/atom.symlink/themes
+atom/atom.symlink/.atom-socket-secret*
 
 git/gitconfig.local.symlink
 
