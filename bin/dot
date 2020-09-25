@@ -6,6 +6,7 @@
 # to make sure you're on the latest and greatest.
 
 set -e
+trap handle_error SIGKILL SIGTERM
 
 cd "$(dirname "$0")/.."
 
@@ -28,6 +29,10 @@ fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
   exit 1
+}
+
+handle_error () {
+  fail "Oh no! An error occurred. If you need help solving the problem, open a new issue ${GITHUB_REPOSITORY_URL}/issues/new"
 }
 
 command_exists() {
@@ -108,6 +113,17 @@ set_os_defaults() {
   fi
 
   success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
+}
+
+clone_or_update_repository() {
+  if [ ! -d $DOTFILES ]; then
+    git clone --recursive "$GITHUB_REPOSITORY_URL.git" $DOTFILES
+  else
+    cd $DOTFILES
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    git fetch --all && git rebase $branch
+    cd -
+  fi
 }
 
 install_homebrew() {
@@ -280,7 +296,7 @@ install_git() {
     if [ `uname` == 'Darwin' ]; then
       brew install git
     elif [ `uname` == 'Linux' ]; then
-      sudo apt-get install git
+      sudo apt-get install git -y
     else
       fail "Error: Failed to install Git!"
     fi
@@ -317,10 +333,7 @@ install_dotfiles() {
   install_git
   install_homebrew
 
-  if [ ! -d $DOTFILES ]
-  then
-    git clone --recursive "$GITHUB_REPOSITORY_URL.git" $DOTFILES
-  fi
+  clone_or_update_repository
 }
 
 # Full install
