@@ -86,14 +86,19 @@ setup_workspace_dir () {
 setup_gitconfig () {
   info 'Setting up gitconfig...'
 
-  if ! [ -f $DOTFILES/git/gitconfig.local.symlink ]; then
+  if ! [ -f $DOTFILES/git/gitconfig.local.symlinke ]; then
     git_credential='cache'
     if [ `uname` == "Darwin" ]; then
       git_credential='osxkeychain'
     fi
 
-    read -p "- What is your github author name? " git_authorname
-    read -p "- What is your github author email? " git_authoremail
+    if [ "$CIRCLE_CI" = "true" ]; then
+      git_authorname='test'
+      git_authoremail='test@test.com'
+    else
+      read -p "- What is your github author name? " git_authorname
+      read -p "- What is your github author email? " git_authoremail
+    fi
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" $DOTFILES/git/gitconfig.local.symlink.example > $DOTFILES/git/gitconfig.local.symlink
 
@@ -210,26 +215,30 @@ link_file () {
 
       else
 
-        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
+        if [ "$CIRCLE_CI" = "true" ]; then
+          skip=true;
+        else
+          user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+          [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+          read -n 1 action
 
-        case "$action" in
-          o )
-            overwrite=true;;
-          O )
-            overwrite_all=true;;
-          b )
-            backup=true;;
-          B )
-            backup_all=true;;
-          s )
-            skip=true;;
-          S )
-            skip_all=true;;
-          * )
-            ;;
-        esac
+          case "$action" in
+            o )
+              overwrite=true;;
+            O )
+              overwrite_all=true;;
+            b )
+              backup=true;;
+            B )
+              backup_all=true;;
+            s )
+              skip=true;;
+            S )
+              skip_all=true;;
+            * )
+              ;;
+          esac
+        fi
 
       fi
 
@@ -313,13 +322,15 @@ install_dotfiles() {
     message="You already have dotfiles installed, do you want to update? [Y/n] "
   fi
 
-  read -p "${message}" -n 1 y
-  echo ""
-  answer=`echo "${y}" | tr '[a-z]' '[A-Z]'`
+  if [ "$CIRCLE_CI" != "true" ]; then
+    read -p "${message}" -n 1 y
+    echo ""
+    answer=`echo "${y}" | tr '[a-z]' '[A-Z]'`
 
-  if [[ ${answer} != "Y" ]]
-  then
-    fail "Ok... maybe next time then."
+    if [[ ${answer} != "Y" ]]
+    then
+        fail "Ok... maybe next time then."
+    fi
   fi
 
   success "Here we go! 🚀"
