@@ -52,7 +52,7 @@ help() {
   echo "  -s, --install-software     Install software"
   echo "  --set-defaults             Set OS defaults"
   echo "  --link                     Link .symlink files"
-  echo "  --setup-projects-folder    Setup projects folder"
+  echo "  --setup-workspace-folder   Setup workspace folder"
   echo "  --setup-git                Setup gitconfig"
   exit
 }
@@ -77,10 +77,10 @@ banner() {
   echo ""
 }
 
-setup_projects_dir () {
-  mkdir -p ~/Projects
+setup_workspace_dir () {
+  mkdir -p ~/workspace
 
-  success 'Projects folder created'
+  success 'Workspace folder created'
 }
 
 setup_gitconfig () {
@@ -333,12 +333,11 @@ install_dotfiles() {
 main() {
   banner "$*"
   install_dotfiles "$*"
-  setup_projects_dir
-  # TODO adicionar isto ao fim
-  #setup_gitconfig
   install_link_files
   install_software
   set_os_defaults
+  setup_workspace_dir
+  setup_gitconfig
 
   echo ""
   echo ""
@@ -372,11 +371,11 @@ while test $# -gt 0; do
       install_link_files
       exit
       ;;
-    "--setup-projects-dir")
-      setup_projects_dir
+    "--setup-workspace-dir")
+      setup_workspace_dir
       exit
       ;;
-    "--setup-git")
+    "--setup-git"|"--git")
       setup_gitconfig
       exit
       ;;
