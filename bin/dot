@@ -108,11 +108,11 @@ set_os_defaults() {
     info "Installing macos defaults..."
 
     $DOTFILES/macos/set-defaults.sh
+
+    success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
   else
     info "No OS defaults avaiable for your OS"
   fi
-
-  success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
 }
 
 clone_or_update_repository() {
@@ -130,15 +130,13 @@ install_homebrew() {
   if test ! $(which brew); then
     info "Installing homebrew..."
 
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    # added "echo" to run it non-interactively because the homebrew script checks if it's being run in a terminal with interactivity.
+    echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-    # Linux: add Homebrew to your PATH and to your bash shell profile script,
-    # either ~/.profile on Debian/Ubuntu or ~/.bash_profile on CentOS/Fedora/Red Hat.
-    if test "$(expr substr $(uname -s) 1 5)" = "Linux"; then
+    # Linux: add Homebrew to your PATH
+    if [ `uname` == 'Linux' ]; then
       test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
       test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-      test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-      echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
     fi
   else
     success "Brew already installed. Skipping..."
@@ -155,18 +153,28 @@ vim_custom_installer() {
   vim -u $HOME/.vimrc.bundles +PluginUpdate +qa
 }
 
-install_software() {
+install_software_macos() {
   info "Updating Homebrew..."
   brew update
   brew upgrade
   brew cleanup
 
+  brew bundle --file $DOTFILES/homebrew/Brewfile.macos
+}
+
+install_software_linux() {
+  bash -c $DOTFILES/linux/install-software.sh
+}
+
+install_software() {
   info "Installing software..."
 
+  install_homebrew
+
   if [ `uname` == 'Linux' ]; then
-    brew bundle --file $DOTFILES/Brewfile.linux
+    install_software_linux
   else
-    brew bundle --file $DOTFILES/Brewfile
+    install_software_macos
   fi
 
   # find the installers and run them iteratively
@@ -272,9 +280,14 @@ install_link_files() {
 
 install_cli_tools() {
   if [ `uname` == 'Linux' ]; then
-    sudo apt-get update && sudo apt-get install build-essential curl wget -y
-  elif [ `uname` == 'Darwin' ]; then
+    sudo apt-get update
+    sudo apt-get install -y \
+      build-essential \
+      curl \
+      wget \
+      git
 
+  elif [ `uname` == 'Darwin' ]; then
     if ! [ $(xcode-select -p) ]; then
       info "Installing Command Line Tools..."
       info "Please, wait until Command Line Tools will be installed, before continue."
@@ -288,23 +301,6 @@ install_cli_tools() {
   fi
 }
 
-install_git() {
-  if ! command_exists git; then
-    info "Installing Git..."
-
-    if [ `uname` == 'Darwin' ]; then
-      brew install git
-    elif [ `uname` == 'Linux' ]; then
-      sudo apt-get install git -y
-    else
-      fail "Error: Failed to install Git!"
-    fi
-
-    success "Git installed successfully."
-  else
-    success "Git already installed. Skipping..."
-  fi
-}
 
 install_dotfiles() {
   echo "Checking for installed dotfiles in $DOTFILES..."
@@ -329,8 +325,6 @@ install_dotfiles() {
   success "Here we go! 🚀"
 
   install_cli_tools
-  install_git
-  install_homebrew
 
   clone_or_update_repository
 }
@@ -340,7 +334,8 @@ main() {
   banner "$*"
   install_dotfiles "$*"
   setup_projects_dir
-  setup_gitconfig
+  # TODO adicionar isto ao fim
+  #setup_gitconfig
   install_link_files
   install_software
   set_os_defaults
