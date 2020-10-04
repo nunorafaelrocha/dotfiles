@@ -1,41 +1,47 @@
 <div align="center">
-  <br>
-  <img src="logo.jpg" alt="Dotfiles">
-  <br>
-  <br>
-  <p>
-    Your dotfiles are how you personalize your system. These are mine. :sunglasses:
-  </p>
-  <br>
-	<br>
+  <img src="logo.jpg" alt="Dotfiles" height="300px">
 </div>
 
-## 🛠 installation
+# 🚀 Nuno's Dotfiles
 
-via curl
+Your dotfiles are how you personalize your system. These are mine. :sunglasses:
+
+**Supported Operating Systems:**
+
+- MacOS (>=10.14)
+- Ubuntu (>=18.04)
+
+## 🔧 Installation
+
+**via curl**
 
 ```sh
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/master/bin/dot)"
 ```
 
-via wget
+**via git**
 
 ```sh
-bash -c "$(wget https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/master/bin/dot -O -)"
+git clone --recursive https://github.com/nunorafaelrocha/dotfiles ~/.dotfiles
+cd ~/.dotfiles
+./bin/dot
 ```
 
-This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles`.
-
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
+## 🔁 Update
 
 `dot` is a simple script that installs some dependencies, sets sane macOS
 defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
-## topical
+## 💄 Customization
+
+Everything is configured and tweaked within `~/.dotfiles`.
+
+The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
+which sets up a few paths that'll be different on your particular machine.
+
+### topics
 
 Everything's built around topic areas. If you're adding a new area to your
 forked dotfiles — say, "Java" — you can simply add a `java` directory and put
@@ -43,7 +49,7 @@ files in there. Anything with an extension of `.zsh` will get automatically
 included into your shell. Anything with an extension of `.symlink` will get
 symlinked without extension into `$HOME` when you run `script/bootstrap`.
 
-## components
+### components
 
 There's a few special files in the hierarchy.
 
