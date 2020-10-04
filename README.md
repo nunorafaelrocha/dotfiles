@@ -4,11 +4,13 @@
 
 # 🚀 Nuno's Dotfiles
 
+[![CircleCI](https://circleci.com/gh/nunorafaelrocha/dotfiles.svg?style=svg)](https://circleci.com/gh/nunorafaelrocha/dotfiles)
+
 Your dotfiles are how you personalize your system. These are mine. :sunglasses:
 
 **Supported Operating Systems:**
 
-- MacOS (>=10.14)
+- macOS (>=10.14)
 - Ubuntu (>=18.04)
 
 ## 🔧 Installation
