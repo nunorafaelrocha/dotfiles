@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-$DOTFILES/bin/atom-package-install
+if test $(which apm); then
+  $DOTFILES/bin/atom-package-install
+fi
