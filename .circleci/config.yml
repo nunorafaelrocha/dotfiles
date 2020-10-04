@@ -1,0 +1,13 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2020.10
+    working_directory: ~/.dotfiles
+    steps:
+      - checkout
+      - run:
+          name: "Install dotfiles"
+          command: |
+            cd ~/.dotfiles
+            ./bin/dot
