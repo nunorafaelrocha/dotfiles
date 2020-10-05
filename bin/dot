@@ -342,6 +342,10 @@ install_dotfiles() {
 
 # Full install
 main() {
+  if [ `whoami` = root ]; then
+    fail "don't run this as root!"
+  fi
+
   banner "$*"
   install_dotfiles "$*"
   install_link_files
