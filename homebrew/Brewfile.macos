@@ -2,7 +2,7 @@ cask_args appdir: '/Applications'
 
 tap 'homebrew/bundle'
 tap 'homebrew/cask-versions'
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 
 brew 'ack'
 brew 'awscli'
