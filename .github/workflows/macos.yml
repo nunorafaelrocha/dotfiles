@@ -1,0 +1,37 @@
+name: Test macOS
+
+on: [push]
+
+jobs:
+  test_bin_dot:
+    name: macOS ${{ matrix.name }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-10.15, macOS-11.0]
+        include:
+          - os: macOS-10.15
+            name: Catalina
+          - os: macOS-11.0
+            name: Big Sur
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: .dotfiles
+
+      - name: Workarounds (cleanup environment)
+        run: |
+          brew uninstall openssl@1.0.2t
+          rm -rf /usr/local/etc/openssl
+          rm -rf /usr/local/etc/openssl@1.1
+          rm -rf /usr/local/bin/aws
+          rm -rf /usr/local/bin/aws_completer
+          rm -rf /usr/local/bin/node
+          rm -rf /usr/local/bin/npm
+
+      - name: Install dotfiles
+        run: |
+          export DOTFILES=$HOME/work/dotfiles/dotfiles/.dotfiles
+          cd .dotfiles
+          ./bin/dot
