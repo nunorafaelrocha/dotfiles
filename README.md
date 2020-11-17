@@ -5,6 +5,7 @@
 # 🚀 Nuno's Dotfiles
 
 [![CircleCI](https://circleci.com/gh/nunorafaelrocha/dotfiles.svg?style=svg)](https://circleci.com/gh/nunorafaelrocha/dotfiles)
+![macOS](https://github.com/nunorafaelrocha/dotfiles/workflows/Test%20macOS/badge.svg)
 
 Your dotfiles are how you personalize your system. These are mine. :sunglasses:
 
