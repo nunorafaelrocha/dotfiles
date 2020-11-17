@@ -11,11 +11,13 @@
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
 
-# Ask for the administrator password upfront
-sudo -v
+if [ "$CI" != "true" ]; then
+	# Ask for the administrator password upfront
+	sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+	# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+fi
 
 ###############################################################################
 # General UI/UX                                                               #
@@ -719,26 +721,29 @@ defaults write org.m0k.transmission RandomPort -bool true
 # Kill affected applications                                                  #
 ###############################################################################
 
-for app in "Activity Monitor" \
-	"Address Book" \
-	"Calendar" \
-	"cfprefsd" \
-	"Contacts" \
-	"Dock" \
-	"Finder" \
-	"Google Chrome Canary" \
-	"Google Chrome" \
-	"Mail" \
-	"Messages" \
-	"Photos" \
-	"Safari" \
-	"SizeUp" \
-	"Spectacle" \
-	"SystemUIServer" \
-	"Terminal" \
-	"Transmission" \
-	"Tweetbot" \
-	"Twitter" \
-	"iCal"; do
-	killall "${app}" &> /dev/null
-done
+# Let's not kill when running CI jobs.
+if [ "$CI" != "true" ]; then
+	for app in "Activity Monitor" \
+		"Address Book" \
+		"Calendar" \
+		"cfprefsd" \
+		"Contacts" \
+		"Dock" \
+		"Finder" \
+		"Google Chrome Canary" \
+		"Google Chrome" \
+		"Mail" \
+		"Messages" \
+		"Photos" \
+		"Safari" \
+		"SizeUp" \
+		"Spectacle" \
+		"SystemUIServer" \
+		"Terminal" \
+		"Transmission" \
+		"Tweetbot" \
+		"Twitter" \
+		"iCal"; do
+		killall "${app}" &> /dev/null
+	done
+fi
