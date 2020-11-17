@@ -1,0 +1,31 @@
+name: Test Ubuntu
+
+on: [push]
+
+jobs:
+  test_bin_dot:
+    name: Ubuntu ${{ matrix.name }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
+        include:
+          - os: ubuntu-16.04
+            name: Xenial Xerus
+          - os: ubuntu-18.04
+            name: Bionic Beaver
+          - os: ubuntu-20.04
+            name: Focal Fossa
+    env:
+      CI: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: .dotfiles
+
+      - name: Install dotfiles
+        run: |
+          export DOTFILES=$HOME/work/dotfiles/dotfiles/.dotfiles
+          cd .dotfiles
+          ./bin/dot
