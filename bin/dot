@@ -10,7 +10,11 @@ trap handle_error SIGKILL SIGTERM
 
 cd "$(dirname "$0")/.."
 
-export DOTFILES=$HOME/.dotfiles
+# Don't set DOTFILES folder if it's being set already.
+if [ -z "$DOTFILES" ]; then
+  export DOTFILES=$HOME/.dotfiles
+fi
+
 GITHUB_REPOSITORY_URL="https://github.com/nunorafaelrocha/dotfiles"
 
 info () {
