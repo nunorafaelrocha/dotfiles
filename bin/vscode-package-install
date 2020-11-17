@@ -10,4 +10,4 @@
 
 set -e
 
-while read in; do code --install-extension "$in"; done < ~/.dotfiles/vscode/packages.txt
+while read in; do code --install-extension "$in"; done < $DOTFILES/vscode/packages.txt

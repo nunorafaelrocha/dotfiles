@@ -11,4 +11,4 @@ set -e
 
 apm update --no-confirm
 
-apm install --packages-file ~/.dotfiles/atom/packages.txt
+apm install --packages-file $DOTFILES/atom/packages.txt
