@@ -10,6 +10,8 @@ jobs:
       matrix:
         os: [macOS-10.15, macOS-11.0]
         include:
+          - os: macOS-10.14
+            name: Mojave
           - os: macOS-10.15
             name: Catalina
           - os: macOS-11.0

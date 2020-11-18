@@ -8,10 +8,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-18.04, ubuntu-20.04]
         include:
-          - os: ubuntu-16.04
-            name: Xenial Xerus
           - os: ubuntu-18.04
             name: Bionic Beaver
           - os: ubuntu-20.04
