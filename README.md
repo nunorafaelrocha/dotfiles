@@ -18,7 +18,7 @@ Your dotfiles are how you personalize your system. These are mine. :sunglasses:
 **via curl**
 
 ```sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/master/bin/dot)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/main/bin/dot)"
 ```
 
 **via git**
