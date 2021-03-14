@@ -25,6 +25,7 @@ brew 'vim'
 brew 'wget'
 brew 'yarn'
 brew 'youtube-dl'
+brew 'yq' # example with json - yq r file.yml -j |  jq '.something|keys[]'
 brew 'zsh'
 
 cask '1password'
