@@ -16,7 +16,7 @@ brew 'grc'
 brew 'httpie'
 brew 'imagemagick'
 brew 'jp2a'
-brew 'jq'
+brew 'jq' # example echo '{"foo": 0}' | jq
 brew 'jsonpp'
 brew 'openssl'
 brew 'readline'
