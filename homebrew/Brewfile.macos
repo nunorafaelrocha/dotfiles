@@ -21,9 +21,8 @@ brew 'jq' # example echo '{"foo": 0}' | jq
 brew 'jsonpp'
 brew 'openssl'
 brew 'readline'
-brew 'unrar'
-brew 'vim'
 brew 'tfswitch'
+brew 'vim'
 brew 'wget'
 brew 'yarn'
 brew 'youtube-dl'
@@ -51,6 +50,7 @@ cask 'qlstephen' # https://github.com/whomwah/qlstephen
 cask 'qlvideo' # https://github.com/Marginal/QLVideo
 cask 'quicklook-json' # http://www.sagtau.com/quicklookjson.html
 cask 'quicklookase' # https://github.com/rsodre/QuickLookASE
+cask 'rar'
 cask 'sequel-pro'
 cask 'slack'
 cask 'spotify'
