@@ -24,6 +24,7 @@ jobs:
 
       - name: Workarounds (cleanup environment)
         run: |
+          brew uninstall go@1.15
           rm -rf /usr/local/etc/openssl
           rm -rf /usr/local/etc/openssl@1.1
           rm -rf /usr/local/bin/aws

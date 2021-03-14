@@ -3,6 +3,7 @@ cask_args appdir: '/Applications'
 tap 'homebrew/bundle'
 tap 'homebrew/cask-versions'
 tap 'homebrew/cask-fonts'
+tap 'warrensbox/tap'
 
 brew 'ack'
 brew 'awscli'
@@ -16,15 +17,16 @@ brew 'grc'
 brew 'httpie'
 brew 'imagemagick'
 brew 'jp2a'
-brew 'jq'
+brew 'jq' # example echo '{"foo": 0}' | jq
 brew 'jsonpp'
 brew 'openssl'
 brew 'readline'
-brew 'unrar'
+brew 'tfswitch'
 brew 'vim'
 brew 'wget'
 brew 'yarn'
 brew 'youtube-dl'
+brew 'yq' # example with json - yq r file.yml -j |  jq '.something|keys[]'
 brew 'zsh'
 
 cask '1password'
@@ -48,6 +50,7 @@ cask 'qlstephen' # https://github.com/whomwah/qlstephen
 cask 'qlvideo' # https://github.com/Marginal/QLVideo
 cask 'quicklook-json' # http://www.sagtau.com/quicklookjson.html
 cask 'quicklookase' # https://github.com/rsodre/QuickLookASE
+cask 'rar'
 cask 'sequel-pro'
 cask 'slack'
 cask 'spotify'
@@ -58,4 +61,4 @@ cask 'tunnelblick'
 cask 'visual-studio-code'
 cask 'vlc'
 cask 'webpquicklook' # https://github.com/dchest/webp-quicklook
-cask 'zoomus'
+cask 'zoom'
