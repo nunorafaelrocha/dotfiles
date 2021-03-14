@@ -8,14 +8,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macOS-10.14, macOS-10.15, macOS-11.0]
+        os: [macOS-10.14, macOS-10.15]
         include:
           - os: macOS-10.14
             name: Mojave
           - os: macOS-10.15
             name: Catalina
-          - os: macOS-11.0
-            name: Big Sur
+          # macOS 11.0 image was temporarily disabled for public pools
+          # https://github.com/actions/virtual-environments/issues/2486
+          # - os: macOS-11.0
+          #   name: Big Sur
     steps:
       - name: Checkout
         uses: actions/checkout@v2
