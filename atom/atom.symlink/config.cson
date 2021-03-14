@@ -1,14 +1,20 @@
 "*":
   core:
     disabledPackages: [
+      "linter-solidity"
       "metrics"
       "exception-reporting"
     ]
     telemetryConsent: "no"
-  editor:
-    invisibles: {}
+  "linter-eslint":
+    autofix:
+      fixOnSave: true
   "linter-ui-default":
     panelHeight: 69
-  "tree-view": {}
+    showPanel: true
+  "prettier-atom":
+    formatOnSaveOptions:
+      enabled: true
+    useEslint: true
   welcome:
     showOnStartup: false
