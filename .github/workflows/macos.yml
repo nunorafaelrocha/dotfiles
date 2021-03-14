@@ -26,7 +26,6 @@ jobs:
 
       - name: Workarounds (cleanup environment)
         run: |
-          brew uninstall openssl@1.0.2t
           rm -rf /usr/local/etc/openssl
           rm -rf /usr/local/etc/openssl@1.1
           rm -rf /usr/local/bin/aws
