@@ -61,4 +61,4 @@ cask 'tunnelblick'
 cask 'visual-studio-code'
 cask 'vlc'
 cask 'webpquicklook' # https://github.com/dchest/webp-quicklook
-cask 'zoomus'
+cask 'zoom'
