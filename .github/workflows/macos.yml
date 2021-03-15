@@ -1,6 +1,14 @@
 name: Test macOS
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - ".circleci/**"
+      - "README.md"
+
+  # run the workflow every day at 12am
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   test_bin_dot:
