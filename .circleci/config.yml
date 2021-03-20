@@ -11,3 +11,20 @@ jobs:
           command: |
             cd ~/.dotfiles
             ./bin/dot
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  nightly:
+    jobs:
+      - build
+    triggers:
+      - schedule:
+          # run the workflow every day at 12am
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - main
