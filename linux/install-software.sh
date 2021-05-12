@@ -36,6 +36,7 @@ if [ `uname` == "Linux" ]; then
     ack \
     awscli \
     coreutils \
+    exa \
     fasd \
     git-extras \
     httpie \
