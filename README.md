@@ -8,10 +8,10 @@ Your dotfiles are how you personalize your system. These are mine. :sunglasses:
 
 **Supported Operating Systems**
 
-| OS | Version | CI |
-| --------------------|---------------------|--------------------|
-| macOS | Mojave (10.14) <br/> Catalina (10.15) <br/> Big Sur (11.0) | ![macOS](https://github.com/nunorafaelrocha/dotfiles/workflows/Test%20macOS/badge.svg)
-| Ubuntu | Bionic Beaver (18.04) <br/> Focal Fossa (20.04) | [![CircleCI](https://circleci.com/gh/nunorafaelrocha/dotfiles.svg?style=svg)](https://circleci.com/gh/nunorafaelrocha/dotfiles)
+| OS     | Version                                                    | CI                                                                                                                              |
+| ------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| macOS  | Mojave (10.14) <br/> Catalina (10.15) <br/> Big Sur (11.0) | ![macOS](https://github.com/nunorafaelrocha/dotfiles/workflows/Test%20macOS/badge.svg)                                          |
+| Ubuntu | Bionic Beaver (18.04) <br/> Focal Fossa (20.04)            | [![CircleCI](https://circleci.com/gh/nunorafaelrocha/dotfiles.svg?style=svg)](https://circleci.com/gh/nunorafaelrocha/dotfiles) |
 
 ## 🔧 Installation
 
@@ -46,10 +46,10 @@ which sets up a few paths that'll be different on your particular machine.
 ### topics
 
 Everything's built around topic areas. If you're adding a new area to your
-forked dotfiles — say, "Java" — you can simply add a `java` directory and put
+forked dotfiles — say, "node" — you can simply add a `node` directory and put
 files in there. Anything with an extension of `.zsh` will get automatically
 included into your shell. Anything with an extension of `.symlink` will get
-symlinked without extension into `$HOME` when you run `script/bootstrap`.
+symlinked without extension into `$HOME` when you run `dot` or `dot --link`.
 
 ### components
 
