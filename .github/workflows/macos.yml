@@ -16,6 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#github-hosted-runners
         os: [macOS-10.15]
         include:
           - os: macOS-10.15
