@@ -716,34 +716,3 @@ defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
 
 # Randomize port on launch
 defaults write org.m0k.transmission RandomPort -bool true
-
-###############################################################################
-# Kill affected applications                                                  #
-###############################################################################
-
-# Let's not kill when running CI jobs.
-if [ "$CI" != "true" ]; then
-	for app in "Activity Monitor" \
-		"Address Book" \
-		"Calendar" \
-		"cfprefsd" \
-		"Contacts" \
-		"Dock" \
-		"Finder" \
-		"Google Chrome Canary" \
-		"Google Chrome" \
-		"Mail" \
-		"Messages" \
-		"Photos" \
-		"Safari" \
-		"SizeUp" \
-		"Spectacle" \
-		"SystemUIServer" \
-		"Terminal" \
-		"Transmission" \
-		"Tweetbot" \
-		"Twitter" \
-		"iCal"; do
-		killall "${app}" &> /dev/null
-	done
-fi
