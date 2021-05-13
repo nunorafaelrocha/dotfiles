@@ -8,9 +8,7 @@ if test ! $(which n); then
 fi
 
 if test ! $(which node -v); then
-  n latest
-fi
+  echo "Installing node latest..."
 
-if test ! $(which spoof); then
-  npm install spoof -g
+  n latest
 fi
