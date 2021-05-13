@@ -29,6 +29,3 @@ then
   # Quickly lock your screen by starting screensaver on macOS
   alias afk="/System/Library/CoreServices/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine"
 fi
-
-# Good 'ol Clear Screen command
-alias cls='clear'
