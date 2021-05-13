@@ -31,12 +31,10 @@ brew 'zsh'
 cask '1password'
 cask 'aerial'
 cask 'atom'
-cask 'betterzip' # https://macitbetter.com/downloads/
 cask 'cyberduck'
 cask 'docker'
 cask 'firefox'
 cask 'font-hack-nerd-font'
-cask 'google-backup-and-sync'
 cask 'google-chrome-beta'
 cask 'hyper'
 cask 'iterm2'
@@ -46,9 +44,7 @@ cask 'postman'
 cask 'qlcolorcode' # https://github.com/anthonygelibert/QLColorCode
 cask 'qlmarkdown' # https://github.com/toland/qlmarkdown
 cask 'qlstephen' # https://github.com/whomwah/qlstephen
-cask 'qlvideo' # https://github.com/Marginal/QLVideo
 cask 'quicklook-json' # http://www.sagtau.com/quicklookjson.html
-cask 'quicklookase' # https://github.com/rsodre/QuickLookASE
 cask 'rar'
 cask 'sequel-pro'
 cask 'slack'
