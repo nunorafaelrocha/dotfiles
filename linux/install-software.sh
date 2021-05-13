@@ -53,7 +53,7 @@ if [ `uname` == "Linux" ]; then
   sudo apt-get install -y --no-install-recommends yarn
 
   # locale
-  sudo locale-gen "en_US.UTF-8"
+  sudo locale-gen "en_GB.UTF-8"
   sudo dpkg-reconfigure --frontend noninteractive locales
 
   # Brew specific installers
