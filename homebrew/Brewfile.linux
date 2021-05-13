@@ -1,7 +1,6 @@
 tap 'homebrew/bundle'
 
 brew 'git-fixup'
-brew 'go'
 brew 'jsonpp'
 
 # Installing casks is supported only on macOS
