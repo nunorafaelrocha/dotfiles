@@ -3,5 +3,5 @@ if (( $+commands[grc] )) && (( $+commands[brew] ))
 then
   alias curl="colourify curl"
 
-  source `brew --prefix`/etc/grc.sh
+  source `brew --prefix`/etc/grc.zsh
 fi
