@@ -25,7 +25,6 @@ brew 'readline'
 brew 'tfswitch'
 brew 'vim'
 brew 'wget'
-brew 'youtube-dl'
 brew 'yq' # example with json - yq r file.yml -j |  jq '.something|keys[]'
 brew 'zsh'
 
