@@ -39,6 +39,7 @@ if [ `uname` == "Linux" ]; then
     exa \
     fasd \
     git-extras \
+    grc \
     httpie \
     imagemagick \
     jp2a \
