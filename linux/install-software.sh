@@ -49,12 +49,23 @@ if [ `uname` == "Linux" ]; then
     vim \
     zsh
 
+  # n
+  if test ! $(which n); then
+    curl -L https://git.io/n-install | N_PREFIX="$HOME/.n" bash -s -- -y
+    exec $SHELL
+  fi
+
   # yarn
   sudo apt-get install -y --no-install-recommends yarn
 
   # locale
   sudo locale-gen "en_GB.UTF-8"
   sudo dpkg-reconfigure --frontend noninteractive locales
+
+  info "Updating Homebrew..."
+  brew update
+  brew upgrade
+  brew cleanup
 
   # Brew specific installers
   brew bundle --file $DOTFILES/homebrew/Brewfile.linux

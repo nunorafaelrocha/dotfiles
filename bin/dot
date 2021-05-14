@@ -172,7 +172,6 @@ install_software_macos() {
 }
 
 install_software_linux() {
-  info "Updating Linux Software..."
   bash -c $DOTFILES/linux/install-software.sh
 }
 
