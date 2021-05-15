@@ -152,16 +152,6 @@ install_homebrew() {
   fi
 }
 
-vim_custom_installer() {
-  # Install Vundle, the plug-in manager for Vim.
-  if [ ! -e $HOME/.vim/bundle/Vundle.vim ]; then
-   git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
-  fi
-
-  # Install vim Vundle plugins
-  vim -u $HOME/.vimrc.bundles +PluginUpdate +qa
-}
-
 install_software_macos() {
   info "Updating Homebrew..."
   brew update
@@ -188,10 +178,6 @@ install_software() {
 
   # find the installers and run them iteratively
   info "Running custom installers..."
-
-  # custom vim installer.
-  vim_custom_installer
-  success "vim installed"
 
   find . -name install.sh -not -path "./oh-my-zsh/*" | while read installer ; do bash -c "${installer}" ; success ${installer} ; done
 
