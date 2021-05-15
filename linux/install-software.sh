@@ -52,7 +52,6 @@ if [ `uname` == "Linux" ]; then
   # n
   if test ! $(which n); then
     curl -L https://git.io/n-install | N_PREFIX="$HOME/.n" bash -s -- -y
-    exec $SHELL
   fi
 
   # yarn
