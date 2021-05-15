@@ -1,8 +1,3 @@
-export LSCOLORS="exfxcxdxbxegedabagacad"
-export CLICOLOR=true
-
-# Disable automatic git pull.
-export PURE_GIT_PULL=0
 
 fpath=($DOTFILES/functions $fpath)
 
@@ -24,7 +19,6 @@ setopt PROMPT_SUBST
 setopt CORRECT
 setopt COMPLETE_IN_WORD
 setopt IGNORE_EOF
-setopt NOCORRECT # Disabling Autocorrect in Zsh
 
 setopt APPEND_HISTORY # adds history
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
