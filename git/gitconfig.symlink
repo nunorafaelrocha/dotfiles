@@ -1,159 +1,158 @@
 [alias]
-    # branch (verbose)
-    br = branch -v
+	# branch (verbose)
+	br = branch -v
 
-    # commit
-    ci = commit
+	# commit
+	ci = commit
 
-    # amend your last commit
-    amend = commit --amend
+	# amend your last commit
+	amend = commit --amend
 
-    # amend your last commit
-    ammend = commit --amend
+	# amend your last commit
+	ammend = commit --amend
 
-    # cleanup local branches after they have been merged
-    cleanup = "!git branch --merged | grep  -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d"
+	# cleanup local branches after they have been merged
+	cleanup = "!git branch --merged | grep  -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d"
 
-    # checkout
-    co = checkout
+	# checkout
+	co = checkout
 
-    # checkout pr #<nr>
-    co-pr = !sh -c 'git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1' -
+	# checkout pr #<nr>
+	co-pr = !sh -c 'git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1' -
 
-    # fixup
-    fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	# fixup
+	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 
-    # fetch origin
-    fo = !git fetch origin
+	# fetch origin
+	fo = !git fetch origin
 
-    # fetch upstream
-    fu = !git fetch upstream
+	# fetch upstream
+	fu = !git fetch upstream
 
-    # fetch origin and rebase with origin/master
-    fro = !git fetch origin && git rebase origin/master
+	# fetch origin and rebase with origin/master
+	fro = !git fetch origin && git rebase origin/master
 
-    # fetch upstream and rebase with upstream/master
-    fru = !git fetch upstream && git rebase upstream/master
+	# fetch upstream and rebase with upstream/master
+	fru = !git fetch upstream && git rebase upstream/master
 
-    # pretty log
-    lg = log --graph --pretty='format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
-    promote = !$DOTFILES/bin/git/git-promote
+	# pretty log
+	lg = log --graph --pretty='format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+	promote = !$DOTFILES/bin/git/git-promote
 
-    # rebase
-    rb = rebase
-    ri = rebase --interactive --autosquash
+	# rebase
+	rb = rebase
+	ri = rebase --interactive --autosquash
 
-    # commit with squash tag
-    squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	# commit with squash tag
+	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 
-    # status
-    st = status
+	# status
+	st = status
 
-    # working in progress commit
-    unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
-    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\" --no-verify"
+	# working in progress commit
+	unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
+	wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\" --no-verify"
 
-    # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-    snapshot  = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-    snapshots = !git stash list --grep snapshot
-    ours      = "!f() { git checkout --ours $@ && git add $@; }; f"
-    theirs    = "!f() { git checkout --theirs $@ && git add $@; }; f"
+	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+	snapshot  = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+	snapshots = !git stash list --grep snapshot
+	ours      = "!f() { git checkout --ours $@ && git add $@; }; f"
+	theirs    = "!f() { git checkout --theirs $@ && git add $@; }; f"
 
-    # via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
-    recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+	# via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+	recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 
 [apply]
-    whitespace = fix
+	whitespace = fix
 
 [branch]
-    autosetuprebase = always
+	autosetuprebase = always
 
 [branch "master"]
-    remote = origin
-    merge = refs/heads/master
+	remote = origin
+	merge = refs/heads/master
 
 [branch "main"]
-    remote = origin
-    merge = refs/heads/main
+	remote = origin
+	merge = refs/heads/main
 
 [pull]
-    rebase = preserve
+	rebase = preserve
 
 [color]
-    diff = auto
-    interactive = auto
-    status = auto
-    ui = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = auto
 
 [commit]
   template = ~/.gitmessage
 
 [core]
-    attributesfile = ~/.gitattributes
-    autocrlf = input
-    editor = vim
-    excludesfile = ~/.gitignore
-    quotepath = false
-    safecrlf = true
-    whitespace = cr-at-eol,space-before-tab,-indent-with-non-tab,trailing-space
+	attributesfile = ~/.gitattributes
+	autocrlf = input
+	editor = vim
+	excludesfile = ~/.gitignore
+	quotepath = false
+	safecrlf = true
+	whitespace = cr-at-eol,space-before-tab,-indent-with-non-tab,trailing-space
 
 [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold # line info
-    old = red # deletions
-    new = green # additions
+	meta = yellow bold
+	frag = magenta bold # line info
+	old = red # deletions
+	new = green # additions
 
 [color "status"]
-    added = green
-    changed = yellow
-    untracked = cyan
+	added = green
+	changed = yellow
+	untracked = cyan
 
 [diff]
-    renames = copies
-    tool = vimdiff
-    # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
-    # instead of a/b/c/d as prefixes for patches
-    mnemonicprefix = true
-    algorithm = patience
+	renames = copies
+	tool = vimdiff
+	# Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
+	# instead of a/b/c/d as prefixes for patches
+	mnemonicprefix = true
+	algorithm = patience
 
 [difftool]
-    prompt = false
+	prompt = false
 
 [fetch]
-    prune = true
+	prune = true
 
 [format]
-    pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
 
 [hub]
-    protocol = https
+	protocol = https
 
 [mergetool]
-    keepBackup = false
+  keepBackup = false
 
 [rebase]
-    autosquash = true
-    autostash = true
-    stat = true
+	autosquash = true
+	autostash = true
+	stat = true
 
 [rerere]
-    enabled = 1
-    autoupdate = true
+	enabled = 1
+	autoupdate = true
 
 [status]
-    showUntrackedFiles = all
+	showUntrackedFiles = all
 
 [push]
-    default = simple
+	default = simple
 
 [tag]
-    sort = version:refname
-
+	sort = version:refname
 [include]
-    path = .gitconfig.local
+	path = .gitconfig.local
