@@ -7,4 +7,6 @@ if test ! $(which node -v); then
   echo "Installing node latest..."
 
   n latest
+else
+  echo 'whoops, node not found!'
 fi

@@ -10,6 +10,4 @@ atom/atom.symlink/storage
 atom/atom.symlink/themes
 atom/atom.symlink/.atom-socket-secret*
 
-git/gitconfig.local.symlink
-
 vim/vim.symlink/bundle/*

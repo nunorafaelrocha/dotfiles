@@ -88,27 +88,15 @@ setup_workspace_dir () {
 }
 
 setup_gitconfig () {
-  info 'Setting up gitconfig...'
+  info 'Setting up gitconfig using gitconfig-cli...'
 
-  if ! [ -f $DOTFILES/git/gitconfig.local.symlinke ]; then
-    git_credential='cache'
-    if [ `uname` == "Darwin" ]; then
-      git_credential='osxkeychain'
-    fi
+  if test ! $(which npx); then
+    fail "npx binary not found. Please install node and npm first"
+  fi
 
-    if [ "$CI" = "true" ]; then
-      git_authorname='test'
-      git_authoremail='test@test.com'
-    else
-      read -p "- What is your github author name? " git_authorname
-      read -p "- What is your github author email? " git_authoremail
-    fi
-
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" $DOTFILES/git/gitconfig.local.symlink.example > $DOTFILES/git/gitconfig.local.symlink
-
-    success 'Finished setting up gitconfig.'
-  else
-    success 'The gitconfig.local already exists. Skipping...'
+  # Ignoring this step in CI mode.
+  if [ "$CI" != "true" ]; then
+    npx zx https://raw.githubusercontent.com/nunorafaelrocha/gitconfig-cli/main/index.mjs
   fi
 }
 
