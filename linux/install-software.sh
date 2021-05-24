@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Installing software (not using brew casks because it's only supported for macOS atm).
 
 if [ `uname` == "Linux" ]; then
@@ -36,7 +38,6 @@ if [ `uname` == "Linux" ]; then
     ack \
     awscli \
     coreutils \
-    exa \
     fasd \
     git-extras \
     grc \
@@ -61,7 +62,7 @@ if [ `uname` == "Linux" ]; then
   sudo locale-gen "en_GB.UTF-8"
   sudo dpkg-reconfigure --frontend noninteractive locales
 
-  info "Updating Homebrew..."
+  echo "Updating Homebrew..."
   brew update
   brew upgrade
   brew cleanup
