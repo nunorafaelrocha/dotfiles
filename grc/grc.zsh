@@ -1,7 +1,10 @@
 # GRC colorizes nifty unix tools all over the place
-if (( $+commands[grc] )) && (( $+commands[brew] ))
+if (( $+commands[grc] ))
 then
-  alias curl="colourify curl"
-
-  source `brew --prefix`/etc/grc.zsh
+  if [[ `uname` == "Darwin" && (( $+commands[brew] )) ]]
+  then
+    source `brew --prefix`/etc/grc.zsh
+  else
+    [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+  fi
 fi
