@@ -33,13 +33,13 @@ jobs:
 
       - name: Workarounds (cleanup environment)
         run: |
-          brew uninstall go@1.15
           rm -rf /usr/local/etc/openssl
           rm -rf /usr/local/etc/openssl@1.1
           rm -rf /usr/local/bin/aws
           rm -rf /usr/local/bin/aws_completer
           rm -rf /usr/local/bin/node
           rm -rf /usr/local/bin/npm
+      # brew uninstall go@1.15
 
       - name: Install dotfiles
         run: |
