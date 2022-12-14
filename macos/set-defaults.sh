@@ -150,7 +150,7 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 defaults write com.apple.finder QuitMenuItem -bool true
 
 # Finder: disable window animations and Get Info animations
-defaults write com.apple.finder DisableAllAnimations -bool true
+#defaults write com.apple.finder DisableAllAnimations -bool true
 
 # Set Desktop as the default location for new Finder windows
 # Computer     : `PfCm`
@@ -162,7 +162,7 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 # Other…       : `PfLo`
 # For other paths, use `PfLo` and `file:///full/path/here/`
 defaults write com.apple.finder NewWindowTarget -string "PfHm"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -216,7 +216,7 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 # Show item info near icons on the desktop and in other icon views
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+# doesnt work anymore - /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
 # Show item info to the right of the icons on the desktop
@@ -224,17 +224,17 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 # Enable snap-to-grid for icons on the desktop and in other icon views
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+# doesnt work anymore - /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
 # Increase grid spacing for icons on the desktop and in other icon views
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+# doesnt work anymore - /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
 
 # Increase the size of icons on the desktop and in other icon views
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+# doesnt work anymore - /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
 
 # Use list view in all Finder windows by default
@@ -253,23 +253,9 @@ chflags nohidden ~/Library
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
 
-# Remove Dropbox’s green checkmark icons in Finder
-file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
-[ -e "${file}" ] && mv -f "${file}" "${file}.bak"
-
-# Expand the following File Info panes:
-# “General”, “Open with”, and “Sharing & Permissions”
-defaults write com.apple.finder FXInfoPanesExpanded -dict \
-	General -bool true \
-	OpenWith -bool true \
-	Privileges -bool true
-
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
-
-# Enable highlight hover effect for the grid view of a stack (Dock)
-defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
 # Set the icon size of Dock items to 36 pixels
 defaults write com.apple.dock tilesize -int 36
@@ -496,35 +482,35 @@ defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnab
 # 	MENU_SPOTLIGHT_SUGGESTIONS (send search queries to Apple)
 # 	MENU_WEBSEARCH             (send search queries to Apple)
 # 	MENU_OTHER
-defaults write com.apple.spotlight orderedItems -array \
-		'{"enabled" = 1;"name" = "APPLICATIONS";}' \
-		'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-		'{"enabled" = 1;"name" = "DIRECTORIES";}' \
-		'{"enabled" = 1;"name" = "MENU_CONVERSION";}' \
-		'{"enabled" = 0;"name" = "PDF";}' \
-		'{"enabled" = 0;"name" = "DOCUMENTS";}' \
-		'{"enabled" = 0;"name" = "FONTS";}' \
-		'{"enabled" = 0;"name" = "MESSAGES";}' \
-		'{"enabled" = 0;"name" = "CONTACT";}' \
-		'{"enabled" = 0;"name" = "EVENT_TODO";}' \
-		'{"enabled" = 0;"name" = "IMAGES";}' \
-		'{"enabled" = 0;"name" = "BOOKMARKS";}' \
-		'{"enabled" = 0;"name" = "MUSIC";}' \
-		'{"enabled" = 0;"name" = "MOVIES";}' \
-		'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-		'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-		'{"enabled" = 0;"name" = "SOURCE";}' \
-		'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
-		'{"enabled" = 0;"name" = "MENU_OTHER";}' \
-		'{"enabled" = 1;"name" = "MENU_EXPRESSION";}' \
-		'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTION";}'
-
-# Load new settings before rebuilding the index
-killall mds > /dev/null 2>&1
-# Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
-# Rebuild the index from scratch
-sudo mdutil -E / > /dev/null
+# defaults write com.apple.spotlight orderedItems -array \
+# 		'{"enabled" = 1;"name" = "APPLICATIONS";}' \
+# 		'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+# 		'{"enabled" = 1;"name" = "DIRECTORIES";}' \
+# 		'{"enabled" = 1;"name" = "MENU_CONVERSION";}' \
+# 		'{"enabled" = 0;"name" = "PDF";}' \
+# 		'{"enabled" = 0;"name" = "DOCUMENTS";}' \
+# 		'{"enabled" = 0;"name" = "FONTS";}' \
+# 		'{"enabled" = 0;"name" = "MESSAGES";}' \
+# 		'{"enabled" = 0;"name" = "CONTACT";}' \
+# 		'{"enabled" = 0;"name" = "EVENT_TODO";}' \
+# 		'{"enabled" = 0;"name" = "IMAGES";}' \
+# 		'{"enabled" = 0;"name" = "BOOKMARKS";}' \
+# 		'{"enabled" = 0;"name" = "MUSIC";}' \
+# 		'{"enabled" = 0;"name" = "MOVIES";}' \
+# 		'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
+# 		'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
+# 		'{"enabled" = 0;"name" = "SOURCE";}' \
+# 		'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
+# 		'{"enabled" = 0;"name" = "MENU_OTHER";}' \
+# 		'{"enabled" = 1;"name" = "MENU_EXPRESSION";}' \
+# 		'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTION";}'
+#
+# # Load new settings before rebuilding the index
+# killall mds > /dev/null 2>&1
+# # Make sure indexing is enabled for the main volume
+# sudo mdutil -i on / > /dev/null
+# # Rebuild the index from scratch
+# sudo mdutil -E / > /dev/null
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
