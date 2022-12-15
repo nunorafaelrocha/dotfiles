@@ -127,6 +127,7 @@ set_os_defaults() {
 clone_or_update_repository() {
   if [ ! -d $DOTFILES ]; then
     git clone --recursive "$GITHUB_REPOSITORY_URL.git" $DOTFILES
+    git checkout dotfiles-lite-2022
   else
     cd $DOTFILES
     branch=$(git rev-parse --abbrev-ref HEAD)
