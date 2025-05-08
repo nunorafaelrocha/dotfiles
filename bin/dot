@@ -90,7 +90,7 @@ setup_workspace_dir () {
 setup_gitconfig () {
   info 'Setting up gitconfig...'
 
-  if ! [ -f $DOTFILES/git/gitconfig.local.symlinke ]; then
+  if ! [ -f $DOTFILES/git/gitconfig.local.symlink ]; then
     git_credential='cache'
     if [ `uname` == "Darwin" ]; then
       git_credential='osxkeychain'
