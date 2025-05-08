@@ -23,6 +23,7 @@ brew 'yq' # example with json - yq r file.yml -j |  jq '.something|keys[]'
 brew 'zsh'
 
 cask '1password'
+cask 'chatgpt'
 cask 'docker'
 cask 'gpg-suite-no-mail'
 cask 'firefox'
