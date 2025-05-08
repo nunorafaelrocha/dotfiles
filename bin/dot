@@ -92,9 +92,7 @@ setup_gitconfig () {
 
   if ! [ -f $DOTFILES/git/gitconfig.local.symlink ]; then
     git_credential='cache'
-    if [ `uname` == "Darwin" ]; then
-      git_credential='osxkeychain'
-    fi
+    git_credential='osxkeychain'
 
     if [ "$CI" = "true" ]; then
       git_authorname='test'
@@ -141,18 +139,12 @@ install_homebrew() {
 
     # added "echo" to run it non-interactively because the homebrew script checks if it's being run in a terminal with interactivity.
     echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-    # Linux: add Homebrew to your PATH
-    if [ `uname` == 'Linux' ]; then
-      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    fi
   else
     success "Brew already installed. Skipping..."
   fi
 }
 
-install_software_macos() {
+install_software() {
   info "Updating Homebrew..."
   brew update
   brew upgrade
@@ -161,20 +153,11 @@ install_software_macos() {
   brew bundle --file $DOTFILES/homebrew/Brewfile.macos
 }
 
-install_software_linux() {
-  bash -c $DOTFILES/linux/install-software.sh
-}
-
 install_software() {
   info "Installing software..."
 
   install_homebrew
-
-  if [ `uname` == 'Linux' ]; then
-    install_software_linux
-  else
-    install_software_macos
-  fi
+  install_software
 
   # find the installers and run them iteratively
   info "Running custom installers..."
@@ -278,25 +261,15 @@ install_link_files() {
 }
 
 install_cli_tools() {
-  if [ `uname` == 'Linux' ]; then
-    sudo apt-get update
-    sudo apt-get install -y \
-      build-essential \
-      curl \
-      wget \
-      git
+  if ! [ $(xcode-select -p) ]; then
+    info "Installing Command Line Tools..."
+    info "Please, wait until Command Line Tools will be installed, before continue."
 
-  elif [ `uname` == 'Darwin' ]; then
-    if ! [ $(xcode-select -p) ]; then
-      info "Installing Command Line Tools..."
-      info "Please, wait until Command Line Tools will be installed, before continue."
+    xcode-select --install
 
-      xcode-select --install
-
-      success "Command Line Tools installed successfully."
-    else
-      success "Command Line Tools already installed. Skipping..."
-    fi
+    success "Command Line Tools installed successfully."
+  else
+    success "Command Line Tools already installed. Skipping..."
   fi
 }
 
