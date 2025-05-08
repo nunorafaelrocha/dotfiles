@@ -29,7 +29,6 @@ brew 'zsh'
 
 cask '1password'
 cask 'aerial'
-cask 'atom'
 cask 'cyberduck'
 cask 'docker'
 cask 'gpg-suite-no-mail'
