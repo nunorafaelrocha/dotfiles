@@ -3,7 +3,6 @@ name: Test macOS
 on:
   push:
     paths-ignore:
-      - ".circleci/**"
       - "README.md"
 
   # run the workflow every day at 12am
@@ -17,29 +16,15 @@ jobs:
     strategy:
       matrix:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#github-hosted-runners
-        os: [macOS-10.15]
+        os: [macOS-15]
         include:
-          - os: macOS-10.15
-            name: Catalina
-          # macOS 11.0 image was temporarily disabled for public pools
-          # https://github.com/actions/virtual-environments/issues/2486
-          # - os: macOS-11.0
-          #   name: Big Sur
+          - os: macOS-15
+            name: Sequoia
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           path: .dotfiles
-
-      - name: Workarounds (cleanup environment)
-        run: |
-          brew uninstall go@1.15
-          rm -rf /usr/local/etc/openssl
-          rm -rf /usr/local/etc/openssl@1.1
-          rm -rf /usr/local/bin/aws
-          rm -rf /usr/local/bin/aws_completer
-          rm -rf /usr/local/bin/node
-          rm -rf /usr/local/bin/npm
 
       - name: Install dotfiles
         run: |
