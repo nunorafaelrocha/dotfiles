@@ -7,13 +7,3 @@ zstyle ':completion:*' insert-tab pending
 # Load and initialize the completion system
 autoload -Uz compinit
 compinit
-
-# Init fasd and cache init code
-fasd_cache="$HOME/.fasd-init-bash"
-
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias zsh-hook >| "$fasd_cache"
-fi
-
-source "$fasd_cache"
-unset fasd_cache
