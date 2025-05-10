@@ -111,15 +111,11 @@ setup_gitconfig () {
 }
 
 set_os_defaults() {
-  if [ `uname` == "Darwin" ]; then
-    info "Installing macos defaults..."
+  info "Installing macos defaults..."
 
-    $DOTFILES/macos/set-defaults.sh
+  $DOTFILES/macos/set-defaults.sh
 
-    success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
-  else
-    info "No OS defaults avaiable for your OS"
-  fi
+  success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
 }
 
 clone_or_update_repository() {
@@ -133,31 +129,23 @@ clone_or_update_repository() {
   fi
 }
 
-install_homebrew() {
+install_software() {
+  info "Installing software..."
+
+  # install homebrew
   if test ! $(which brew); then
     info "Installing homebrew..."
 
     # added "echo" to run it non-interactively because the homebrew script checks if it's being run in a terminal with interactivity.
     echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   else
-    success "Brew already installed. Skipping..."
+    info "Updating Homebrew..."
+    brew update
+    brew upgrade
+    brew cleanup
   fi
-}
-
-install_software() {
-  info "Updating Homebrew..."
-  brew update
-  brew upgrade
-  brew cleanup
 
   brew bundle --file $DOTFILES/homebrew/Brewfile.macos
-}
-
-install_software() {
-  info "Installing software..."
-
-  install_homebrew
-  install_software
 
   # find the installers and run them iteratively
   info "Running custom installers..."
