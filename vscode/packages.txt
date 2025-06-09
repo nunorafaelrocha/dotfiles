@@ -1,5 +1,0 @@
-dbaeumer.vscode-eslint
-Equinusocio.vsc-material-theme
-esbenp.prettier-vscode
-PeterJausovec.vscode-docker
-PKief.material-icon-theme
