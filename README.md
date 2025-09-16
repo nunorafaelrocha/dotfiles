@@ -8,10 +8,9 @@ Your dotfiles are how you personalize your system. These are mine. :sunglasses:
 
 **Supported Operating Systems**
 
-| OS     | Version                                                    | CI                                                                                                                              |
-| ------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| macOS  | Mojave (10.14) <br/> Catalina (10.15) <br/> Big Sur (11.0) | ![macOS](https://github.com/nunorafaelrocha/dotfiles/workflows/Test%20macOS/badge.svg)                                          |
-| Ubuntu | Bionic Beaver (18.04) <br/> Focal Fossa (20.04)            | [![CircleCI](https://circleci.com/gh/nunorafaelrocha/dotfiles.svg?style=svg)](https://circleci.com/gh/nunorafaelrocha/dotfiles) |
+| OS    | Version       | CI                                                                                     |
+| ----- | ------------- | -------------------------------------------------------------------------------------- |
+| macOS | Sequoia (15)  | ![macOS](https://github.com/nunorafaelrocha/dotfiles/workflows/Test%20macOS/badge.svg) |
 
 ## 🔧 Installation
 
