@@ -1,3 +1,18 @@
+printf "\n\n"
+printf "\033[38;5;205m██████╗  ██████╗ ████████╗███████╗██╗██╗     ███████╗███████╗\033[0m\n"
+printf "\033[38;5;219m██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝██║██║     ██╔════╝██╔════╝\033[0m\n"
+printf "\033[38;5;51m██║  ██║██║   ██║   ██║   █████╗  ██║██║     █████╗  ███████╗\033[0m\n"
+printf "\033[38;5;45m██║  ██║██║   ██║   ██║   ██╔══╝  ██║██║     ██╔══╝  ╚════██║\033[0m\n"
+printf "\033[38;5;39m██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║\033[0m\n"
+printf "\033[38;5;33m╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝\033[0m\n"
+printf "                                                             \n"
+printf "\033[38;5;205m██████╗ ██╗   ██╗    ███╗   ██╗██╗   ██╗███╗   ██╗ ██████╗\033[0m\n"
+printf "\033[38;5;219m██╔══██╗╚██╗ ██╔╝    ████╗  ██║██║   ██║████╗  ██║██╔═══██╗\033[0m\n"
+printf "\033[38;5;51m██████╔╝ ╚████╔╝     ██╔██╗ ██║██║   ██║██╔██╗ ██║██║   ██║\033[0m\n"
+printf "\033[38;5;45m██╔══██╗  ╚██╔╝      ██║╚██╗██║██║   ██║██║╚██╗██║██║   ██║\033[0m\n"
+printf "\033[38;5;39m██████╔╝   ██║       ██║ ╚████║╚██████╔╝██║ ╚████║╚██████╔╝\033[0m\n"
+printf "\033[38;5;33m╚═════╝    ╚═╝       ╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝\033[0m\n"
+printf "\n\n"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -74,9 +89,8 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  fasd
   git
-  osx
+  macos
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -129,5 +143,3 @@ do
 done
 
 unset config_files
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

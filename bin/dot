@@ -90,11 +90,9 @@ setup_workspace_dir () {
 setup_gitconfig () {
   info 'Setting up gitconfig...'
 
-  if ! [ -f $DOTFILES/git/gitconfig.local.symlinke ]; then
+  if ! [ -f $DOTFILES/git/gitconfig.local.symlink ]; then
     git_credential='cache'
-    if [ `uname` == "Darwin" ]; then
-      git_credential='osxkeychain'
-    fi
+    git_credential='osxkeychain'
 
     if [ "$CI" = "true" ]; then
       git_authorname='test'
@@ -113,15 +111,11 @@ setup_gitconfig () {
 }
 
 set_os_defaults() {
-  if [ `uname` == "Darwin" ]; then
-    info "Installing macos defaults..."
+  info "Installing macos defaults..."
 
-    $DOTFILES/macos/set-defaults.sh
+  $DOTFILES/macos/set-defaults.sh
 
-    success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
-  else
-    info "No OS defaults avaiable for your OS"
-  fi
+  success "OS defaults applied successfully. Note that some of these changes require a logout/restart to take effect."
 }
 
 clone_or_update_repository() {
@@ -135,46 +129,23 @@ clone_or_update_repository() {
   fi
 }
 
-install_homebrew() {
+install_software() {
+  info "Installing software..."
+
+  # install homebrew
   if test ! $(which brew); then
     info "Installing homebrew..."
 
     # added "echo" to run it non-interactively because the homebrew script checks if it's being run in a terminal with interactivity.
     echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-    # Linux: add Homebrew to your PATH
-    if [ `uname` == 'Linux' ]; then
-      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    fi
   else
-    success "Brew already installed. Skipping..."
+    info "Updating Homebrew..."
+    brew update
+    brew upgrade
+    brew cleanup
   fi
-}
-
-install_software_macos() {
-  info "Updating Homebrew..."
-  brew update
-  brew upgrade
-  brew cleanup
 
   brew bundle --file $DOTFILES/homebrew/Brewfile.macos
-}
-
-install_software_linux() {
-  bash -c $DOTFILES/linux/install-software.sh
-}
-
-install_software() {
-  info "Installing software..."
-
-  install_homebrew
-
-  if [ `uname` == 'Linux' ]; then
-    install_software_linux
-  else
-    install_software_macos
-  fi
 
   # find the installers and run them iteratively
   info "Running custom installers..."
@@ -278,25 +249,15 @@ install_link_files() {
 }
 
 install_cli_tools() {
-  if [ `uname` == 'Linux' ]; then
-    sudo apt-get update
-    sudo apt-get install -y \
-      build-essential \
-      curl \
-      wget \
-      git
+  if ! [ $(xcode-select -p) ]; then
+    info "Installing Command Line Tools..."
+    info "Please, wait until Command Line Tools will be installed, before continue."
 
-  elif [ `uname` == 'Darwin' ]; then
-    if ! [ $(xcode-select -p) ]; then
-      info "Installing Command Line Tools..."
-      info "Please, wait until Command Line Tools will be installed, before continue."
+    xcode-select --install
 
-      xcode-select --install
-
-      success "Command Line Tools installed successfully."
-    else
-      success "Command Line Tools already installed. Skipping..."
-    fi
+    success "Command Line Tools installed successfully."
+  else
+    success "Command Line Tools already installed. Skipping..."
   fi
 }
 

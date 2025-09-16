@@ -78,7 +78,7 @@
 	merge = refs/heads/main
 
 [pull]
-	rebase = preserve
+	rebase = merges
 
 [color]
 	diff = auto

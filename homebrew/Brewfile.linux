@@ -1,7 +1,0 @@
-tap 'homebrew/bundle'
-
-brew 'git-fixup'
-brew 'jsonpp'
-
-# Installing casks is supported only on macOS
-# Check linux/install-software.sh file to install applications using apt-get
