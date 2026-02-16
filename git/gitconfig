@@ -29,16 +29,15 @@
 	# fetch upstream
 	fu = !git fetch upstream
 
-	# fetch origin and rebase with origin/master
-	fro = !git fetch origin && git rebase origin/master
+	# fetch origin and rebase with origin's default branch
+	fro = "!git fetch origin && git rebase origin/$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo main)"
 
-	# fetch upstream and rebase with upstream/master
-	fru = !git fetch upstream && git rebase upstream/master
+	# fetch upstream and rebase with upstream's default branch
+	fru = "!git fetch upstream && git rebase upstream/$(git symbolic-ref refs/remotes/upstream/HEAD 2>/dev/null | sed 's@^refs/remotes/upstream/@@' || echo main)"
 
 	# pretty log
 	lg = log --graph --pretty='format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
-	promote = !$DOTFILES/bin/git/git-promote
 
 	# rebase
 	rb = rebase
@@ -131,9 +130,6 @@
 [format]
 	pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
 
-[hub]
-	protocol = https
-
 [mergetool]
   keepBackup = false
 
@@ -155,4 +151,4 @@
 [tag]
 	sort = version:refname
 [include]
-	path = .gitconfig.local
+	path = ./gitconfig.local

@@ -4,72 +4,48 @@
 
 # 🚀 Nuno's Dotfiles
 
-Your dotfiles are how you personalize your system. These are mine. :sunglasses:
+Your dotfiles are how you personalize your system. These are mine. 😎
 
-**Supported Operating Systems**
+## Prerequisites
 
-| OS    | Version       | CI                                                                                     |
-| ----- | ------------- | -------------------------------------------------------------------------------------- |
-| macOS | Sequoia (15)  | ![macOS](https://github.com/nunorafaelrocha/dotfiles/workflows/Test%20macOS/badge.svg) |
+- macOS with Xcode Command Line Tools (`xcode-select --install`)
 
-## 🔧 Installation
-
-**via curl**
+## Install
 
 ```sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/nunorafaelrocha/dotfiles/main/bin/dot)"
-```
-
-**via git**
-
-```sh
-git clone --recursive https://github.com/nunorafaelrocha/dotfiles ~/.dotfiles
+git clone https://github.com/nunorafaelrocha/dotfiles ~/.dotfiles
 cd ~/.dotfiles
-./bin/dot
+make
 ```
 
-## 🔁 Update
+## Usage
 
-`dot` is a simple script that installs some dependencies, sets sane macOS
-defaults, and so on. Tweak this script, and occasionally run `dot` from
-time to time to keep your environment fresh and up-to-date. You can find
-this script in `bin/`.
+```sh
+make help      # Show all targets
+make link      # Create symlinks
+make brew      # Install Homebrew packages
+make node      # Install Node.js via n
+make python    # Install Python via pyenv
+make vim       # Install vim plugins
+make macos     # Apply macOS defaults
+make gitsetup  # Configure git identity
+make clean     # Remove symlinks
+```
 
-## 💄 Customization
+## Structure
 
-Everything is configured and tweaked within `~/.dotfiles`.
+```
+Makefile              # The installer
+Brewfile              # Homebrew packages
+zshrc                 # All shell config (PATH, env, prompt, aliases, functions)
+git/                  # Git configuration
+vim/                  # Vim configuration
+macos/                # macOS defaults and hushlogin
+```
 
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
+## Customization
 
-### topics
-
-Everything's built around topic areas. If you're adding a new area to your
-forked dotfiles — say, "node" — you can simply add a `node` directory and put
-files in there. Anything with an extension of `.zsh` will get automatically
-included into your shell. Anything with an extension of `.symlink` will get
-symlinked without extension into `$HOME` when you run `dot` or `dot --link`.
-
-### components
-
-There's a few special files in the hierarchy.
-
-- **bin/**: Anything in `bin/` will get added to your `$PATH` and be made
-  available everywhere.
-- **Brewfile**: This is a list of applications for [Homebrew Cask](https://caskroom.github.io) to install: things like Chrome and 1Password and stuff. Might want to edit this file before running any initial setup.
-- **topic/\*.zsh**: Any files ending in `.zsh` get loaded into your
-  environment.
-- **topic/path.zsh**: Any file named `path.zsh` is loaded first and is
-  expected to setup `$PATH` or similar.
-- **topic/completion.zsh**: Any file named `completion.zsh` is loaded
-  last and is expected to setup autocomplete.
-- **topic/install.sh**: Any file named `install.sh` is executed when you run `dot` or `dot --install`. To avoid being loaded automatically, its extension is `.sh`, not `.zsh`.
-- **topic/\*.symlink**: Any file ending in `*.symlink` gets symlinked into
-  your `$HOME`. This is so you can keep all of those versioned in your dotfiles
-  but still keep those autoloaded files in your home directory. These get
-  symlinked in when you run `dot` or `dot --link`.
-
-## 🙏 thanks
-
-I forked [Zach Holman](https://github.com/holman)'s awesome
-[dotfiles](https://github.com/holman/dotfiles) which were an easy way to start my own customization.
+- Edit `zshrc` for shell config (aliases, PATH, functions, etc.)
+- Edit `Brewfile` for packages
+- Use `~/.localrc` for private env vars and secrets
+- Run `make gitsetup` to configure git identity (stored in `git/gitconfig.local`, which is gitignored)

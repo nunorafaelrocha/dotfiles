@@ -1,0 +1,17 @@
+cask_args appdir: '/Applications'
+
+brew 'ripgrep'
+brew 'coreutils'
+brew 'git-extras'
+brew 'git-fixup'
+brew 'gh'
+brew 'grc'
+brew 'jq'
+brew 'n'
+brew 'pyenv'
+brew 'pipx'
+brew 'vim'
+brew 'zsh'
+
+cask 'docker-desktop'
+cask 'postman'
