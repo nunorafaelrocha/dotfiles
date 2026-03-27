@@ -5,6 +5,10 @@ on:
     paths-ignore:
       - "README.md"
 
+  pull_request:
+    paths-ignore:
+      - "README.md"
+
   workflow_dispatch:
 
   # run the workflow every day at 12am
