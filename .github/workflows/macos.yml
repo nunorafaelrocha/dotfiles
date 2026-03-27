@@ -5,6 +5,10 @@ on:
     paths-ignore:
       - "README.md"
 
+  pull_request:
+    paths-ignore:
+      - "README.md"
+
   workflow_dispatch:
 
   # run the workflow every day at 12am
@@ -12,25 +16,17 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  test_bin_dot:
-    name: macOS ${{ matrix.name }} (${{ matrix.os }})
+  test:
+    name: macOS (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#github-hosted-runners
-        os: [macos-15]
-        include:
-          - os: macos-15
-            name: Sequoia
+        os: [macos-latest]
+    env:
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          path: .dotfiles
 
       - name: Install dotfiles
-        env:
-          DOTFILES: ${{ github.workspace }}/.dotfiles
-        run: |
-          cd "$DOTFILES"
-          ./bin/dot
+        run: make all

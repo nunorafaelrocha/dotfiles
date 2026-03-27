@@ -1,3 +1,15 @@
-git/gitconfig.local.symlink
+git/gitconfig.local
 
-vim/vim.symlink/bundle/*
+# macOS
+.DS_Store
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Claude Code
+.claude/
+
+# Homebrew
+Brewfile.lock.json

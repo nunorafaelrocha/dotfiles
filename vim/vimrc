@@ -1,4 +1,4 @@
-" Bundles
+" Plugins
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
@@ -9,13 +9,15 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax enable
   set background=dark
   set termguicolors
-  colorscheme solarized
+  colorscheme solarized8
 endif
 
 " Leader
 let mapleader = " "
 
 " Environment
+set regexpengine=1
+set redrawtime=10000
 set noswapfile
 set enc=utf8
 set bs=2

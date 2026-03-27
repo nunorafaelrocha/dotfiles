@@ -1,0 +1,11 @@
+call plug#begin('~/.vim/plugged')
+
+" Define plugins via Github repos
+Plug 'tpope/vim-git'
+Plug 'lifepillar/vim-solarized8'
+
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()
