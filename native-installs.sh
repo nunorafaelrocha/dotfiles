@@ -15,7 +15,8 @@ fi
 if ! command -v zed >/dev/null 2>&1; then
   if [ -d "/Applications/Zed.app" ]; then
     echo "Installing Zed CLI..."
-    ln -sf /Applications/Zed.app/Contents/MacOS/cli /usr/local/bin/zed
+    mkdir -p "$HOME/.local/bin"
+    ln -sf /Applications/Zed.app/Contents/MacOS/cli "$HOME/.local/bin/zed"
   else
     echo "Zed.app not found, skipping CLI install."
   fi
