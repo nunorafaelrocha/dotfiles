@@ -13,22 +13,6 @@ osascript -e 'tell application "System Settings" to quit'
 # General UI/UX                                                               #
 ###############################################################################
 
-# Set computer name (as done via System Preferences → Sharing)
-# sudo calls are grouped to minimise password prompts (timestamp_timeout=0)
-if [ "$CI" != "true" ]; then
-	read -p "Enter computer name (e.g. airnuno): " COMPUTER_NAME
-	if [ -n "$COMPUTER_NAME" ]; then
-		if [[ ! "$COMPUTER_NAME" =~ ^[a-zA-Z0-9-]+$ ]]; then
-			echo "Error: computer name must be alphanumeric with hyphens only"
-			exit 1
-		fi
-		sudo scutil --set ComputerName "$COMPUTER_NAME"
-		sudo scutil --set HostName "$COMPUTER_NAME"
-		sudo scutil --set LocalHostName "$COMPUTER_NAME"
-		sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
-	fi
-fi
-
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 # Disable automatic capitalization

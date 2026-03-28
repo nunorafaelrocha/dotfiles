@@ -46,7 +46,7 @@ define BANNER
 	@echo ""
 endef
 
-.PHONY: all link brew native-installs node python vim macos gitsetup clean help
+.PHONY: all link brew native-installs node python vim macos hostname gitsetup clean help
 
 all: ## Full install
 	@$(MAKE) --no-print-directory banner
@@ -118,6 +118,17 @@ macos: ## Apply macOS defaults
 	$(call INFO,Applying macOS defaults...)
 	@$(DOTFILES)/macos/defaults.sh
 	$(call OK,macOS defaults applied. Some changes require logout/restart.)
+
+hostname: ## Set computer name
+	$(call INFO,Setting computer name...)
+	@read -p "  Enter computer name: " name; \
+		if [ -z "$$name" ]; then printf "  [$(RED)FAIL$(RESET)] No name provided\n"; exit 1; fi; \
+		if echo "$$name" | grep -qvE '^[a-zA-Z0-9-]+$$'; then printf "  [$(RED)FAIL$(RESET)] Name must be alphanumeric with hyphens only\n"; exit 1; fi; \
+		sudo scutil --set ComputerName "$$name"; \
+		sudo scutil --set HostName "$$name"; \
+		sudo scutil --set LocalHostName "$$name"; \
+		sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$$name"
+	$(call OK,Computer name set)
 
 gitsetup: ## Configure git identity
 	$(call INFO,Setting up git identity...)
