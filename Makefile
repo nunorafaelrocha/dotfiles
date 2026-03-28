@@ -75,7 +75,10 @@ help: ## Show targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "    %-12s %s\n", $$1, $$2}'
 	@echo ""
 
-link: ## Create symlinks
+link: ## Create symlinks and directories
+	$(call INFO,Creating directories...)
+	@mkdir -p $(HOME)/workspace
+	@mkdir -p $(HOME)/.local/bin
 	$(call INFO,Creating symlinks...)
 	@ln -sf $(DOTFILES)/zshrc $(HOME)/.zshrc
 	@ln -sf $(DOTFILES)/git/gitconfig $(HOME)/.gitconfig
