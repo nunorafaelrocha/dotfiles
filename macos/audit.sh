@@ -81,6 +81,7 @@ check "Show battery percentage"               com.apple.controlcenter BatterySho
 
 # --- Trackpad & Keyboard ---
 section "Trackpad & Keyboard"
+check "Trackpad tracking speed"                NSGlobalDomain com.apple.trackpad.scaling 1.5
 check "Tap to click (trackpad)"               com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking true
 check "Tap to click (global)"                 NSGlobalDomain com.apple.mouse.tapBehavior 1
 check "Full keyboard access"                  NSGlobalDomain AppleKeyboardUIMode 3
