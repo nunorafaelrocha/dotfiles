@@ -25,8 +25,9 @@ make help      # Show all targets
 make link      # Create symlinks
 make brew      # Install Homebrew packages
 make node      # Install Node.js via n
-make python    # Install Python via pyenv
-make vim       # Install vim plugins
+make python          # Install Python via pyenv
+make native-installs # Run native shell installers
+make vim             # Install vim plugins
 make macos     # Apply macOS defaults
 make gitsetup  # Configure git identity
 make clean     # Remove symlinks
@@ -37,6 +38,7 @@ make clean     # Remove symlinks
 ```
 Makefile              # The installer
 Brewfile              # Homebrew packages
+native-installs.sh    # Native shell installers (e.g., Claude Code)
 zshrc                 # All shell config (PATH, env, prompt, aliases, functions)
 git/                  # Git configuration
 vim/                  # Vim configuration

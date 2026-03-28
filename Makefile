@@ -46,7 +46,7 @@ define BANNER
 	@echo ""
 endef
 
-.PHONY: all link brew node python vim macos gitsetup clean help
+.PHONY: all link brew native-installs node python vim macos gitsetup clean help
 
 all: ## Full install
 	@$(MAKE) --no-print-directory banner
@@ -54,6 +54,7 @@ all: ## Full install
 	@$(MAKE) --no-print-directory brew
 	@$(MAKE) --no-print-directory node
 	@$(MAKE) --no-print-directory python
+	@$(MAKE) --no-print-directory native-installs
 	@$(MAKE) --no-print-directory vim
 	@$(MAKE) --no-print-directory macos
 	@echo ""
@@ -99,6 +100,11 @@ python: ## Install Python via pyenv
 	@$(HOMEBREW_PREFIX)/bin/pyenv install -s 3.13
 	@$(HOMEBREW_PREFIX)/bin/pyenv global 3.13
 	$(call OK,Python 3.13 installed)
+
+native-installs: ## Run native shell installers
+	$(call INFO,Running native installers...)
+	@$(DOTFILES)/native-installs.sh
+	$(call OK,Native installers completed)
 
 vim: ## Install vim plugins
 	$(call INFO,Installing Vim plugins...)

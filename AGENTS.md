@@ -18,6 +18,7 @@ Flat layout — config files at the root or in small topic directories, symlinke
 - `Brewfile` — All Homebrew packages and casks
 - `git/gitconfig` — Git configuration (includes `git/gitconfig.local` for identity)
 - `vim/vimrc` — Vim configuration
+- `native-installs.sh` — Native shell installers for tools not managed by Homebrew (e.g., Claude Code)
 - `macos/defaults.sh` — macOS system preferences
 
 ## Symlinks
@@ -36,3 +37,6 @@ Flat layout — config files at the root or in small topic directories, symlinke
 - Keep secrets out of the repo. Use `~/.localrc` for private env vars.
 - `git/gitconfig.local` is gitignored and holds user-specific git identity. Create via `make gitsetup`.
 - When adding or removing a setting from `macos/defaults.sh`, always update `macos/audit.sh` to match.
+- When adding a new tool, check the vendor's recommended installation method. If the vendor recommends a native installer over Homebrew, add it to `native-installs.sh`. Otherwise, add it to `Brewfile`.
+- When adding or modifying Makefile targets, verify the `all` target order respects dependencies (e.g., `brew` before targets that use Homebrew-installed tools, `link` before anything that reads symlinked config).
+- When making structural changes (new files, new Makefile targets, new symlinks), update `README.md` to match.
