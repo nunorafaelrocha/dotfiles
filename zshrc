@@ -21,6 +21,9 @@ fi
 
 # --- PATH ---
 
+# Local bin
+[[ :$PATH: == *":$HOME/.local/bin:"* ]] || PATH="$HOME/.local/bin:$PATH"
+
 # Node (n version manager)
 export N_PREFIX="$HOME/.n"
 [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH="$N_PREFIX/bin:$PATH"
