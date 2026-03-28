@@ -148,13 +148,11 @@ defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
 # Show indicator lights for open applications in the Dock
 defaults write com.apple.dock show-process-indicators -bool true
 
-# Set Dock apps
-# defaults write com.apple.dock persistent-apps -array \
-#   ‘<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///Applications/Slack.app/</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>’ \
-#   ‘<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///Applications/Google%20Chrome.app/</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>’
+# Clear all persistent apps from Dock (Finder is always present)
+defaults write com.apple.dock persistent-apps -array
 
-# Show only open applications in the Dock
-#defaults write com.apple.dock static-only -bool true
+# Set Downloads folder in Dock (stack, sorted by date added)
+defaults write com.apple.dock persistent-others -array '<dict><key>tile-data</key><dict><key>arrangement</key><integer>2</integer><key>displayas</key><integer>0</integer><key>file-data</key><dict><key>_CFURLString</key><string>file:///Users/'"$USER"'/Downloads/</string><key>_CFURLStringType</key><integer>15</integer></dict><key>file-label</key><string>Downloads</string><key>file-type</key><integer>2</integer><key>showas</key><integer>1</integer></dict><key>tile-type</key><string>directory-tile</string></dict>'
 
 # Don’t animate opening applications from the Dock
 defaults write com.apple.dock launchanim -bool false
