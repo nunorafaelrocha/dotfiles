@@ -8,7 +8,8 @@ if ! command -v claude >/dev/null 2>&1; then
   echo "Installing Claude Code..."
   curl -fsSL https://claude.ai/install.sh | bash
 else
-  echo "Claude Code already installed, skipping."
+  echo "Updating Claude Code..."
+  claude update
 fi
 
 # Zed CLI
