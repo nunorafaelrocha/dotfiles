@@ -52,10 +52,12 @@ all: ## Full install
 	@$(MAKE) --no-print-directory banner
 	@$(MAKE) --no-print-directory link
 	@$(MAKE) --no-print-directory brew
+	@$(MAKE) --no-print-directory gitsetup
 	@$(MAKE) --no-print-directory node
 	@$(MAKE) --no-print-directory python
 	@$(MAKE) --no-print-directory native-installs
 	@$(MAKE) --no-print-directory vim
+	@$(MAKE) --no-print-directory hostname
 	@$(MAKE) --no-print-directory macos
 	@echo ""
 	@printf "  $(GREEN)Installation completed! Have fun! 🔥$(RESET)\n"
