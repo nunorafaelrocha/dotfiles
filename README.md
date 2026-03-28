@@ -50,4 +50,4 @@ macos/                # macOS defaults and hushlogin
 - Edit `zshrc` for shell config (aliases, PATH, functions, etc.)
 - Edit `Brewfile` for packages
 - Use `~/.localrc` for private env vars and secrets
-- Run `make gitsetup` to configure git identity (stored in `git/gitconfig.local`, which is gitignored)
+- Run `make gitsetup` to configure git identity (stored in `~/.gitconfig.local`, which is gitignored)

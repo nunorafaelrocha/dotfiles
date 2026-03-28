@@ -16,7 +16,6 @@ Flat layout — config files at the root or in small topic directories, symlinke
 - `Makefile` — Installer. Run `make` for full install, or individual targets (`make link`, `make brew`, etc.)
 - `zshrc` — All shell config in one file (PATH, env, options, prompt, aliases, functions)
 - `Brewfile` — All Homebrew packages and casks
-- `git/gitconfig` — Git configuration (includes `git/gitconfig.local` for identity)
 - `vim/vimrc` — Vim configuration
 - `native-installs.sh` — Native shell installers for tools not managed by Homebrew (e.g., Claude Code)
 - `macos/defaults.sh` — macOS system preferences
