@@ -132,11 +132,11 @@ hostname: ## Set computer name
 
 gitsetup: ## Configure git identity
 	$(call INFO,Setting up git identity...)
-	@test -f $(DOTFILES)/git/gitconfig.local && \
+	@test -f $(HOME)/.gitconfig.local && \
 		printf "  [ $(GREEN)OK$(RESET) ] gitconfig.local already exists. Skipping.\n" || \
 		(read -p "  Git name: " name; read -p "  Git email: " email; \
 		sed -e "s/AUTHORNAME/$$name/g" -e "s/AUTHOREMAIL/$$email/g" \
-		$(DOTFILES)/git/gitconfig.local.example > $(DOTFILES)/git/gitconfig.local && \
+		$(DOTFILES)/git/gitconfig.local.example > $(HOME)/.gitconfig.local && \
 		printf "  [ $(GREEN)OK$(RESET) ] Git identity configured\n")
 	$(call INFO,Setting up GitHub CLI...)
 	@$(HOMEBREW_PREFIX)/bin/gh auth status &>/dev/null && printf "  [ $(GREEN)OK$(RESET) ] GitHub CLI already authenticated\n" || $(HOMEBREW_PREFIX)/bin/gh auth login
