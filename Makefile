@@ -125,6 +125,9 @@ macos: ## Apply macOS defaults
 	$(call OK,macOS defaults applied. Some changes require logout/restart.)
 
 hostname: ## Set computer name
+ifeq ($(CI),true)
+	@printf "  [ $(YELLOW)SKIP$(RESET) ] hostname (CI environment)\n"
+else
 	$(call INFO,Setting computer name...)
 	@read -p "  Enter computer name: " name; \
 		if [ -z "$$name" ]; then printf "  [$(RED)FAIL$(RESET)] No name provided\n"; exit 1; fi; \
@@ -134,8 +137,12 @@ hostname: ## Set computer name
 		sudo scutil --set LocalHostName "$$name"; \
 		sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$$name"
 	$(call OK,Computer name set)
+endif
 
 gitsetup: ## Configure git identity
+ifeq ($(CI),true)
+	@printf "  [ $(YELLOW)SKIP$(RESET) ] gitsetup (CI environment)\n"
+else
 	$(call INFO,Setting up git identity...)
 	@test -f $(HOME)/.gitconfig.local && \
 		printf "  [ $(GREEN)OK$(RESET) ] gitconfig.local already exists. Skipping.\n" || \
@@ -146,6 +153,7 @@ gitsetup: ## Configure git identity
 	$(call INFO,Setting up GitHub CLI...)
 	@$(HOMEBREW_PREFIX)/bin/gh auth status &>/dev/null && printf "  [ $(GREEN)OK$(RESET) ] GitHub CLI already authenticated\n" || $(HOMEBREW_PREFIX)/bin/gh auth login
 	@$(HOMEBREW_PREFIX)/bin/gh auth setup-git
+endif
 
 clean: ## Remove symlinks
 	$(call INFO,Removing symlinks...)
