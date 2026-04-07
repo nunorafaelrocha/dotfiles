@@ -12,6 +12,14 @@ else
   claude update
 fi
 
+# Ollama
+if ! command -v ollama >/dev/null 2>&1; then
+  echo "Installing Ollama..."
+  curl -fsSL https://ollama.com/install.sh | sh
+else
+  echo "Ollama already installed, skipping."
+fi
+
 # Zed CLI
 if ! command -v zed >/dev/null 2>&1; then
   if [ -d "/Applications/Zed.app" ]; then
