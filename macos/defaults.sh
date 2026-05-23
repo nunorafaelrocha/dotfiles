@@ -50,7 +50,8 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Trackpad: set tracking speed (0 to 3, default is 1)
-defaults write -g com.apple.trackpad.scaling -float 1.5
+# NOTE: no longer works on modern macOS — must be set manually in System Settings
+# defaults write -g com.apple.trackpad.scaling -float 1.5
 
 # Enable full keyboard access for all controls
 # (e.g. enable Tab in modal dialogs)
