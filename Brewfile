@@ -13,5 +13,6 @@ brew 'pipx'
 brew 'vim'
 brew 'zsh'
 
+cask 'codex'
 cask 'docker-desktop'
 cask 'postman'
