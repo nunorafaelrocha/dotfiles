@@ -206,14 +206,21 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 # granted in System Settings > Privacy & Security > Full Disk Access          #
 ###############################################################################
 
-# Enable the Develop menu and the Web Inspector in Safari
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-
 # Add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
-# Disable auto-correct
-defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+# Safari is sandboxed: its prefs live in ~/Library/Containers/com.apple.Safari,
+# which macOS blocks unless the terminal has Full Disk Access. The first write
+# doubles as the access check so we can skip cleanly instead of erroring.
+# Enable the Develop menu and the Web Inspector in Safari
+if defaults write com.apple.Safari IncludeDevelopMenu -bool true 2>/dev/null; then
+	# Disable auto-correct
+	defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+else
+	echo "  [SKIP] Safari defaults: terminal lacks Full Disk Access." >&2
+	echo "         Grant it in System Settings > Privacy & Security > Full Disk Access," >&2
+	echo "         restart the terminal, then re-run: make macos" >&2
+fi
 
 ###############################################################################
 # Terminal                                                                     #
