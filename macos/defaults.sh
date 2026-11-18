@@ -65,10 +65,12 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
 # Set language and text formats
-# Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
-# `Inches`, `en_GB` with `en_US`, and `true` with `false`.
+# Note: if you’re in the US, replace `Centimeters` with `Inches`, `en_GB` with
+# `en_US`, and `true` with `false`.
+# AppleLocale (region) is intentionally not set: set it in System Settings >
+# General > Language & Region. A hand-written value like "en_GB@currency=EUR"
+# breaks some apps (e.g. Spotify login fails with "accounts:103").
 defaults write NSGlobalDomain AppleLanguages -array "en_GB"
-defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
